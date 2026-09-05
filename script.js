@@ -22,12 +22,17 @@ const translations = {
     knowledgeTitle: "📚 База знаний & Цели",
     knowledgeDesc: "Читайте достоверные статьи и копите на мечту.",
     wishTitle: "🎯 Моя главная цель (Вишлист)",
-    wishDesc: "Впишите желаемый предмет. Система сама оценит его реальную стоимость:",
-    wishPlaceholder: "Название (напр. Кроссовки, Наушники)",
+    wishDesc: "Впишите желаемый предмет. Система сама оценит его реальную стоимость (от 10 000 ₸ и выше):",
+    wishPlaceholder: "Название (напр. Наушники, Кроссовки)",
     wishBtn: "Загадать мечту 🚀",
     wishReset: "Сбросить цель 🔄",
-    wishDone: "Цель достигнута! 🎉",
-    wishLeft: "Осталось: "
+    wishDone: "Цель полностью достигнута! 🎉",
+    wishLeft: "Осталось: ",
+    wishSaved: "Уже отложено: ",
+    depositBtn: "Отложить",
+    depositPlaceholder: "Сумма для пополнения (₸)",
+    errorNoMoney: "У вас недостаточно средств на балансе!",
+    errorInvalidAmount: "Введите корректную сумму для откладывания!"
   },
   kk: {
     newUser: "Жас Инвестор",
@@ -51,12 +56,17 @@ const translations = {
     knowledgeTitle: "📚 Білім базасы & Мақсаттар",
     knowledgeDesc: "Пайдалы мақалаларды оқып, арманыңызға ақша жинаңыз.",
     wishTitle: "🎯 Мекемедегі мақсатым (Wishlist)",
-    wishDesc: "Қалаған заттың атын жазыңыз. Жүйе оның бағасын өзі бағалайды:",
-    wishPlaceholder: "Атауы (мыс. Кроссовки, Құлаққап)",
+    wishDesc: "Қалаған заттың атын жазыңыз. Жүйе оның бағасын есептейді (10 000 ₸ бастап):",
+    wishPlaceholder: "Атауы (мыс. Құлаққап, Кроссовки)",
     wishBtn: "Армандау 🚀",
     wishReset: "Мақсатты нөлдеу 🔄",
-    wishDone: "Мақсатқа жеттіңіз! 🎉",
-    wishLeft: "Қалды: "
+    wishDone: "Мақсатқа толық жеттіңіз! 🎉",
+    wishLeft: "Қалды: ",
+    wishSaved: "Қазірдің өзінде жиналды: ",
+    depositBtn: "Салу",
+    depositPlaceholder: "Толықтыру сомасы (₸)",
+    errorNoMoney: "Балансыңызда қаражат жеткіліксіз!",
+    errorInvalidAmount: "Дұрыс соманы енгізіңіз!"
   },
   en: {
     newUser: "Young Investor",
@@ -80,12 +90,17 @@ const translations = {
     knowledgeTitle: "📚 Knowledge Base & Goals",
     knowledgeDesc: "Read trusted articles and save up for your dream.",
     wishTitle: "🎯 My Main Goal (Wishlist)",
-    wishDesc: "Type your desired item. The system will calculate its estimated price:",
-    wishPlaceholder: "Name (e.g. Sneakers, Headphones)",
+    wishDesc: "Type your desired item. The system will calculate its estimated price (from 10,000 ₸+):",
+    wishPlaceholder: "Name (e.g. Headphones, Sneakers)",
     wishBtn: "Set Goal 🚀",
     wishReset: "Reset Goal 🔄",
-    wishDone: "Goal Achieved! 🎉",
-    wishLeft: "Remains: "
+    wishDone: "Goal fully achieved! 🎉",
+    wishLeft: "Remains: ",
+    wishSaved: "Already saved: ",
+    depositBtn: "Deposit",
+    depositPlaceholder: "Deposit amount (₸)",
+    errorNoMoney: "You don't have enough balance!",
+    errorInvalidAmount: "Please enter a valid amount!"
   }
 };
 
@@ -94,6 +109,8 @@ let userProfile = JSON.parse(localStorage.getItem("fin_user_profile")) || null;
 let balance = parseInt(localStorage.getItem("fin_balance")) || 0;
 let completedTasks = JSON.parse(localStorage.getItem("fin_completed_tasks")) || [];
 let readArticles = JSON.parse(localStorage.getItem("fin_read_articles")) || [];
+
+// Теперь wishlist хранит название, сгенерированную цену и уже отложенную сумму (saved)
 let wishlist = JSON.parse(localStorage.getItem("fin_wishlist")) || null;
 
 let marketCategories = [
@@ -122,7 +139,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!userProfile) {
     openModal("modal-welcome");
   } else {
-    // Устанавливаем переключатель в шапке на текущий язык пользователя
     const langSelect = document.getElementById("lang-selector");
     if (langSelect) langSelect.value = userProfile.lang || "ru";
     updateUI();
@@ -141,7 +157,6 @@ function submitRegistration(e) {
   userProfile = { name, age, lang };
   localStorage.setItem("fin_user_profile", JSON.stringify(userProfile));
 
-  // Синхронизируем селектор языка в шапке
   const langSelect = document.getElementById("lang-selector");
   if (langSelect) langSelect.value = lang;
 
@@ -181,7 +196,7 @@ function updateUI() {
   // Баланс
   document.getElementById("balance-amount").textContent = `${balance} ₸`;
 
-  // Перевод текста
+  // Перевод текста статических элементов
   document.querySelector(".balance-label").textContent = t.balanceLabel;
   document.querySelector(".tasks-column h2").textContent = t.tasksTitle;
   document.querySelector(".tasks-column .section-desc").textContent = t.tasksDesc;
@@ -201,6 +216,10 @@ function updateUI() {
   document.querySelector("#wishlist-block p").textContent = t.wishDesc;
   document.getElementById("wish-title-input").placeholder = t.wishPlaceholder;
   document.querySelector("#wishlist-form button").textContent = t.wishBtn;
+
+  // Кнопка и инпут пополнения копилки в HTML (если присутствуют)
+  const depositInput = document.getElementById("wish-deposit-input");
+  if (depositInput) depositInput.placeholder = t.depositPlaceholder;
 
   // Состояние кнопок заданий
   for (let i = 1; i <= 3; i++) {
@@ -247,12 +266,25 @@ function openModal(id) { document.getElementById(id).classList.add("active"); }
 function closeModal(id) { document.getElementById(id).classList.remove("active"); }
 function closeOnOverlay(e, id) { if (e.target.classList.contains("modal-overlay")) closeModal(id); }
 
-// ==================== ВИШЛИСТ ====================
+// ==================== НОВАЯ ЛОГИКА ВИШЛИСТА ====================
+
+// Генерация случайной цены от 10 000 ₸ и выше (с учетом умных ключевых слов или случайного разброса)
 function calculateSmartPrice(title) {
   const lower = title.toLowerCase();
-  if (lower.includes("телефон") || lower.includes("айфон") || lower.includes("смартфон") || lower.includes("ноутбук")) return 48000;
-  if (lower.includes("наушники") || lower.includes("кроссовки") || lower.includes("колонка")) return 25000;
-  return 15000;
+  let basePrice = 15000;
+
+  if (lower.includes("телефон") || lower.includes("айфон") || lower.includes("смартфон") || lower.includes("ноутбук") || lower.includes("macbook")) {
+    basePrice = 45000;
+  } else if (lower.includes("наушники") || lower.includes("кроссовки") || lower.includes("колонка") || lower.includes("планшет")) {
+    basePrice = 20000;
+  }
+
+  // Добавляем случайную надбавку от 0 до 15 000 тенге, чтобы цена всегда была динамической (от 10000 и выше)
+  const randomAddition = Math.floor(Math.random() * 30001);
+  let finalPrice = basePrice + randomAddition;
+  
+  if (finalPrice < 10000) finalPrice = 10000;
+  return finalPrice;
 }
 
 function setWishlistGoal(e) {
@@ -260,16 +292,54 @@ function setWishlistGoal(e) {
   const title = document.getElementById("wish-title-input").value.trim();
   if (!title) return;
 
-  wishlist = { title, price: calculateSmartPrice(title) };
+  wishlist = {
+    title: title,
+    price: calculateSmartPrice(title),
+    saved: 0 // Изначально отложено 0 тенге
+  };
+
   saveState();
   updateUI();
+  document.getElementById("wish-title-input").value = "";
 }
 
 function resetWishlistGoal() {
   wishlist = null;
   localStorage.removeItem("fin_wishlist");
-  document.getElementById("wishlist-form").classList.remove("hidden");
-  document.getElementById("wishlist-progress-box").classList.add("hidden");
+  updateUI();
+}
+
+// Функция пополнения копилки из общего баланса игрока
+function depositToWishlist() {
+  if (!wishlist) return;
+
+  const depositInput = document.getElementById("wish-deposit-input");
+  const amount = parseInt(depositInput.value);
+  const lang = userProfile ? userProfile.lang : "ru";
+  const t = translations[lang] || translations.ru;
+
+  if (isNaN(amount) || amount <= 0) {
+    alert(t.errorInvalidAmount);
+    return;
+  }
+
+  if (amount > balance) {
+    alert(t.errorNoMoney);
+    return;
+  }
+
+  // Списываем с общего баланса и добавляем в копилку мечты
+  balance -= amount;
+  wishlist.saved += amount;
+
+  // Ограничиваем, чтобы накопленная сумма не превышала 100% стоимости (по желанию)
+  if (wishlist.saved > wishlist.price) {
+    wishlist.saved = wishlist.price;
+  }
+
+  depositInput.value = "";
+  saveState();
+  updateUI();
 }
 
 function updateWishlistUI() {
@@ -288,14 +358,20 @@ function updateWishlistUI() {
   if (form) form.classList.add("hidden");
   if (progressBox) progressBox.classList.remove("hidden");
 
-  let percent = Math.min(100, Math.round((balance / wishlist.price) * 100));
-  let remains = Math.max(0, wishlist.price - balance);
+  // Расчет прогресса на основе СКОЛЬКО ОТЛОЖЕНО в копилку, а не общего баланса
+  let percent = Math.min(100, Math.round((wishlist.saved / wishlist.price) * 100));
+  let remains = Math.max(0, wishlist.price - wishlist.saved);
 
   document.getElementById("wish-display-title").textContent = wishlist.title;
-  document.getElementById("wish-display-price").textContent = `${wishlist.price} ₸`;
+  document.getElementById("wish-display-price").textContent = `${wishlist.saved} / ${wishlist.price} ₸`;
   document.getElementById("wish-progress-fill").style.width = `${percent}%`;
   document.getElementById("wish-percent-text").textContent = `${percent}%`;
-  document.getElementById("wish-remains-text").textContent = percent >= 100 ? t.wishDone : `${t.wishLeft}${remains} ₸`;
+  
+  if (wishlist.saved >= wishlist.price) {
+    document.getElementById("wish-remains-text").textContent = t.wishDone;
+  } else {
+    document.getElementById("wish-remains-text").textContent = `${t.wishLeft}${remains} ₸`;
+  }
 }
 
 // ==================== ДЕЙСТВИЯ ЗАДАНИЙ И СТАТЕЙ ====================
