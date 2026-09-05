@@ -109,8 +109,6 @@ let userProfile = JSON.parse(localStorage.getItem("fin_user_profile")) || null;
 let balance = parseInt(localStorage.getItem("fin_balance")) || 0;
 let completedTasks = JSON.parse(localStorage.getItem("fin_completed_tasks")) || [];
 let readArticles = JSON.parse(localStorage.getItem("fin_read_articles")) || [];
-
-// Теперь wishlist хранит название, сгенерированную цену и уже отложенную сумму (saved)
 let wishlist = JSON.parse(localStorage.getItem("fin_wishlist")) || null;
 
 let marketCategories = [
@@ -134,7 +132,7 @@ let subscriptionTasks = [
 let selectedProductIndex = null;
 let currentMarketPair = null;
 
-// ==================== ИНИЦИАЛИЗАЦИЯ ====================
+// ==================== ИНИЦИАЛИЗАЦИЯ И ПРИВЯЗКА СОБЫТИЙ ====================
 document.addEventListener("DOMContentLoaded", () => {
   if (!userProfile) {
     openModal("modal-welcome");
@@ -143,28 +141,56 @@ document.addEventListener("DOMContentLoaded", () => {
     if (langSelect) langSelect.value = userProfile.lang || "ru";
     updateUI();
   }
+
+  // Принудительное назначение обработчиков для надежного клика по кнопкам
+  setupEventListeners();
 });
+
+function setupEventListeners() {
+  // Селектор языка с перезагрузкой страницы
+  const langSelect = document.getElementById("lang-selector");
+  if (langSelect) {
+    langSelect.addEventListener("change", (e) => {
+      changeLanguage(e.target.value);
+    });
+  }
+
+  // Кнопка регистрации
+  const regForm = document.getElementById("reg-form");
+  if (regForm) {
+    regForm.addEventListener("submit", submitRegistration);
+  }
+
+  // Форма вишлиста
+  const wishForm = document.getElementById("wishlist-form");
+  if (wishForm) {
+    wishForm.addEventListener("submit", setWishlistGoal);
+  }
+}
 
 // Отправка формы регистрации
 function submitRegistration(e) {
   e.preventDefault();
-  const name = document.getElementById("reg-name").value.trim();
-  const age = parseInt(document.getElementById("reg-age").value);
-  const lang = document.getElementById("reg-lang").value;
+  const nameInput = document.getElementById("reg-name");
+  const ageInput = document.getElementById("reg-age");
+  const langInput = document.getElementById("reg-lang");
+
+  if (!nameInput || !ageInput || !langInput) return;
+
+  const name = nameInput.value.trim();
+  const age = parseInt(ageInput.value);
+  const lang = langInput.value;
 
   if (!name || !age) return;
 
   userProfile = { name, age, lang };
   localStorage.setItem("fin_user_profile", JSON.stringify(userProfile));
 
-  const langSelect = document.getElementById("lang-selector");
-  if (langSelect) langSelect.value = lang;
-
   closeModal("modal-welcome");
-  updateUI();
+  window.location.reload();
 }
 
-// Переключение языка вручную
+// Переключение языка с перезагрузкой сайта
 function changeLanguage(lang) {
   if (!userProfile) {
     userProfile = { name: "Пользователь", age: 15, lang: lang };
@@ -173,7 +199,7 @@ function changeLanguage(lang) {
   }
 
   localStorage.setItem("fin_user_profile", JSON.stringify(userProfile));
-  updateUI();
+  window.location.reload(); // Перезагружаем страницу для полного применения языка
 }
 
 // ==================== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА ====================
@@ -182,42 +208,64 @@ function updateUI() {
   const t = translations[lang] || translations.ru;
 
   // Имя и статус
-  if (userProfile && userProfile.name) {
-    document.getElementById("user-name").textContent = userProfile.name;
-  } else {
-    document.getElementById("user-name").textContent = t.newUser;
+  const userNameEl = document.getElementById("user-name");
+  if (userNameEl) {
+    userNameEl.textContent = (userProfile && userProfile.name) ? userProfile.name : t.newUser;
   }
 
   const statusEl = document.getElementById("user-status");
-  if (balance >= 1500) statusEl.textContent = t.status3;
-  else if (balance >= 700) statusEl.textContent = t.status2;
-  else statusEl.textContent = t.status1;
+  if (statusEl) {
+    if (balance >= 1500) statusEl.textContent = t.status3;
+    else if (balance >= 700) statusEl.textContent = t.status2;
+    else statusEl.textContent = t.status1;
+  }
 
   // Баланс
-  document.getElementById("balance-amount").textContent = `${balance} ₸`;
+  const balanceAmountEl = document.getElementById("balance-amount");
+  if (balanceAmountEl) balanceAmountEl.textContent = `${balance} ₸`;
 
   // Перевод текста статических элементов
-  document.querySelector(".balance-label").textContent = t.balanceLabel;
-  document.querySelector(".tasks-column h2").textContent = t.tasksTitle;
-  document.querySelector(".tasks-column .section-desc").textContent = t.tasksDesc;
-  document.querySelector(".info-column h2").textContent = t.knowledgeTitle;
-  document.querySelector(".info-column .section-desc").textContent = t.knowledgeDesc;
+  const balanceLabelEl = document.querySelector(".balance-label");
+  if (balanceLabelEl) balanceLabelEl.textContent = t.balanceLabel;
 
-  document.querySelector("#card-task-1 .card-title").textContent = t.task1Title;
-  document.querySelector("#card-task-1 .card-desc").textContent = t.task1Desc;
+  const tasksTitleEl = document.querySelector(".tasks-column h2");
+  if (tasksTitleEl) tasksTitleEl.textContent = t.tasksTitle;
 
-  document.querySelector("#card-task-2 .card-title").textContent = t.task2Title;
-  document.querySelector("#card-task-2 .card-desc").childNodes[0].nodeValue = t.task2Desc + ` (${t.attemptsText}`;
+  const tasksDescEl = document.querySelector(".tasks-column .section-desc");
+  if (tasksDescEl) tasksDescEl.textContent = t.tasksDesc;
 
-  document.querySelector("#card-task-3 .card-title").textContent = t.task3Title;
-  document.querySelector("#card-task-3 .card-desc").textContent = t.task3Desc;
+  const infoTitleEl = document.querySelector(".info-column h2");
+  if (infoTitleEl) infoTitleEl.textContent = t.knowledgeTitle;
 
-  document.querySelector("#wishlist-block h3").textContent = t.wishTitle;
-  document.querySelector("#wishlist-block p").textContent = t.wishDesc;
-  document.getElementById("wish-title-input").placeholder = t.wishPlaceholder;
-  document.querySelector("#wishlist-form button").textContent = t.wishBtn;
+  const infoDescEl = document.querySelector(".info-column .section-desc");
+  if (infoDescEl) infoDescEl.textContent = t.knowledgeDesc;
 
-  // Кнопка и инпут пополнения копилки в HTML (если присутствуют)
+  const task1Title = document.querySelector("#card-task-1 .card-title");
+  if (task1Title) task1Title.textContent = t.task1Title;
+  const task1Desc = document.querySelector("#card-task-1 .card-desc");
+  if (task1Desc) task1Desc.textContent = t.task1Desc;
+
+  const task2Title = document.querySelector("#card-task-2 .card-title");
+  if (task2Title) task2Title.textContent = t.task2Title;
+  const task2Desc = document.querySelector("#card-task-2 .card-desc");
+  if (task2Desc) task2Desc.childNodes[0].nodeValue = t.task2Desc + ` (${t.attemptsText}`;
+
+  const task3Title = document.querySelector("#card-task-3 .card-title");
+  if (task3Title) task3Title.textContent = t.task3Title;
+  const task3Desc = document.querySelector("#card-task-3 .card-desc");
+  if (task3Desc) task3Desc.textContent = t.task3Desc;
+
+  const wishBlockH3 = document.querySelector("#wishlist-block h3");
+  if (wishBlockH3) wishBlockH3.textContent = t.wishTitle;
+  const wishBlockP = document.querySelector("#wishlist-block p");
+  if (wishBlockP) wishBlockP.textContent = t.wishDesc;
+
+  const wishTitleInput = document.getElementById("wish-title-input");
+  if (wishTitleInput) wishTitleInput.placeholder = t.wishPlaceholder;
+
+  const wishBtn = document.querySelector("#wishlist-form button");
+  if (wishBtn) wishBtn.textContent = t.wishBtn;
+
   const depositInput = document.getElementById("wish-deposit-input");
   if (depositInput) depositInput.placeholder = t.depositPlaceholder;
 
@@ -262,13 +310,21 @@ function saveState() {
 }
 
 // ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================
-function openModal(id) { document.getElementById(id).classList.add("active"); }
-function closeModal(id) { document.getElementById(id).classList.remove("active"); }
-function closeOnOverlay(e, id) { if (e.target.classList.contains("modal-overlay")) closeModal(id); }
+function openModal(id) {
+  const modal = document.getElementById(id);
+  if (modal) modal.classList.add("active");
+}
 
-// ==================== НОВАЯ ЛОГИКА ВИШЛИСТА ====================
+function closeModal(id) {
+  const modal = document.getElementById(id);
+  if (modal) modal.classList.remove("active");
+}
 
-// Генерация случайной цены от 10 000 ₸ и выше (с учетом умных ключевых слов или случайного разброса)
+function closeOnOverlay(e, id) {
+  if (e.target.classList.contains("modal-overlay")) closeModal(id);
+}
+
+// ==================== ЛОГИКА ВИШЛИСТА ====================
 function calculateSmartPrice(title) {
   const lower = title.toLowerCase();
   let basePrice = 15000;
@@ -279,28 +335,29 @@ function calculateSmartPrice(title) {
     basePrice = 20000;
   }
 
-  // Добавляем случайную надбавку от 0 до 15 000 тенге, чтобы цена всегда была динамической (от 10000 и выше)
   const randomAddition = Math.floor(Math.random() * 30001);
   let finalPrice = basePrice + randomAddition;
-  
   if (finalPrice < 10000) finalPrice = 10000;
   return finalPrice;
 }
 
 function setWishlistGoal(e) {
   e.preventDefault();
-  const title = document.getElementById("wish-title-input").value.trim();
+  const inputEl = document.getElementById("wish-title-input");
+  if (!inputEl) return;
+
+  const title = inputEl.value.trim();
   if (!title) return;
 
   wishlist = {
     title: title,
     price: calculateSmartPrice(title),
-    saved: 0 // Изначально отложено 0 тенге
+    saved: 0
   };
 
   saveState();
   updateUI();
-  document.getElementById("wish-title-input").value = "";
+  inputEl.value = "";
 }
 
 function resetWishlistGoal() {
@@ -309,11 +366,12 @@ function resetWishlistGoal() {
   updateUI();
 }
 
-// Функция пополнения копилки из общего баланса игрока
 function depositToWishlist() {
   if (!wishlist) return;
 
   const depositInput = document.getElementById("wish-deposit-input");
+  if (!depositInput) return;
+
   const amount = parseInt(depositInput.value);
   const lang = userProfile ? userProfile.lang : "ru";
   const t = translations[lang] || translations.ru;
@@ -328,11 +386,9 @@ function depositToWishlist() {
     return;
   }
 
-  // Списываем с общего баланса и добавляем в копилку мечты
   balance -= amount;
   wishlist.saved += amount;
 
-  // Ограничиваем, чтобы накопленная сумма не превышала 100% стоимости (по желанию)
   if (wishlist.saved > wishlist.price) {
     wishlist.saved = wishlist.price;
   }
@@ -358,19 +414,28 @@ function updateWishlistUI() {
   if (form) form.classList.add("hidden");
   if (progressBox) progressBox.classList.remove("hidden");
 
-  // Расчет прогресса на основе СКОЛЬКО ОТЛОЖЕНО в копилку, а не общего баланса
   let percent = Math.min(100, Math.round((wishlist.saved / wishlist.price) * 100));
   let remains = Math.max(0, wishlist.price - wishlist.saved);
 
-  document.getElementById("wish-display-title").textContent = wishlist.title;
-  document.getElementById("wish-display-price").textContent = `${wishlist.saved} / ${wishlist.price} ₸`;
-  document.getElementById("wish-progress-fill").style.width = `${percent}%`;
-  document.getElementById("wish-percent-text").textContent = `${percent}%`;
-  
-  if (wishlist.saved >= wishlist.price) {
-    document.getElementById("wish-remains-text").textContent = t.wishDone;
-  } else {
-    document.getElementById("wish-remains-text").textContent = `${t.wishLeft}${remains} ₸`;
+  const displayTitle = document.getElementById("wish-display-title");
+  if (displayTitle) displayTitle.textContent = wishlist.title;
+
+  const displayPrice = document.getElementById("wish-display-price");
+  if (displayPrice) displayPrice.textContent = `${wishlist.saved} / ${wishlist.price} ₸`;
+
+  const progressFill = document.getElementById("wish-progress-fill");
+  if (progressFill) progressFill.style.width = `${percent}%`;
+
+  const percentText = document.getElementById("wish-percent-text");
+  if (percentText) percentText.textContent = `${percent}%`;
+
+  const remainsText = document.getElementById("wish-remains-text");
+  if (remainsText) {
+    if (wishlist.saved >= wishlist.price) {
+      remainsText.textContent = t.wishDone;
+    } else {
+      remainsText.textContent = `${t.wishLeft}${remains} ₸`;
+    }
   }
 }
 
@@ -385,7 +450,10 @@ function readArticleAndEarn(artId, url) {
   window.open(url, "_blank");
 }
 
-function openAuditModal() { if (!completedTasks.includes(1)) openModal("modal-audit"); }
+function openAuditModal() {
+  if (!completedTasks.includes(1)) openModal("modal-audit");
+}
+
 function submitAudit(e) {
   e.preventDefault();
   if (completedTasks.includes(1)) return;
@@ -396,11 +464,19 @@ function submitAudit(e) {
   closeModal("modal-audit");
 }
 
-function openMarketModal() { if (!completedTasks.includes(2)) { loadMarketPair(); openModal("modal-market"); } }
+function openMarketModal() {
+  if (!completedTasks.includes(2)) {
+    loadMarketPair();
+    openModal("modal-market");
+  }
+}
+
 function loadMarketPair() {
   selectedProductIndex = null;
   currentMarketPair = marketCategories[0];
   const container = document.getElementById("products-container");
+  if (!container) return;
+
   container.innerHTML = `
     <div class="product-card" id="prod-0" onclick="selectProduct(0)">
       <div class="product-title">${currentMarketPair.prod1.name}</div>
@@ -412,11 +488,14 @@ function loadMarketPair() {
     </div>
   `;
 }
+
 function selectProduct(index) {
   selectedProductIndex = index;
   document.querySelectorAll(".product-card").forEach(c => c.classList.remove("selected"));
-  document.getElementById(`prod-${index}`).classList.add("selected");
+  const prodCard = document.getElementById(`prod-${index}`);
+  if (prodCard) prodCard.classList.add("selected");
 }
+
 function submitMarketChoice() {
   if (selectedProductIndex === currentMarketPair.correctIndex) {
     balance += 700;
@@ -424,21 +503,28 @@ function submitMarketChoice() {
     saveState();
     updateUI();
     closeModal("modal-market");
+  } else {
+    alert("Неверный выбор, попробуйте еще раз!");
   }
 }
 
 function openSubscriptionModal() {
   if (!completedTasks.includes(3)) {
     const task = subscriptionTasks[0];
-    document.getElementById("sub-condition-text").textContent = task.condition;
-    document.getElementById("sub-question-text").textContent = task.question;
+    const condText = document.getElementById("sub-condition-text");
+    if (condText) condText.textContent = task.condition;
+
+    const qText = document.getElementById("sub-question-text");
+    if (qText) qText.textContent = task.question;
 
     const container = document.getElementById("sub-options-container");
-    container.innerHTML = task.options.map((opt, i) => `
-      <label style="display: block; margin-bottom: 8px; cursor: pointer;">
-        <input type="radio" name="sub-opt" value="${i}"> ${opt}
-      </label>
-    `).join("");
+    if (container) {
+      container.innerHTML = task.options.map((opt, i) => `
+        <label style="display: block; margin-bottom: 8px; cursor: pointer;">
+          <input type="radio" name="sub-opt" value="${i}"> ${opt}
+        </label>
+      `).join("");
+    }
 
     openModal("modal-subscription");
   }
@@ -454,3 +540,7 @@ function submitSubscriptionAnswer() {
     saveState();
     updateUI();
     closeModal("modal-subscription");
+  } else {
+    alert("Неверный ответ, попробуйте еще раз!");
+  }
+}
