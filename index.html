@@ -1,49 +1,63 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ФинТрек — Финансовая грамотность</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinQuest — Финансовая грамотность</title>
+    <!-- Подключаем стили -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Подключаем шрифт Outfit из Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <header class="header">
-    <div class="container header-content">
-      <div class="user-profile">
-        <div class="avatar">👦</div>
-        <div>
-          <h2 id="user-name">Пользователь</h2>
-          <span class="status-badge" id="user-status">Новичок в финансах</span>
-        </div>
-      </div>
-      <div class="balance-card">
-        <span class="balance-label">Ваш баланс:</span>
-        <span class="balance-amount" id="balance-amount">0 ₸</span>
-      </div>
+    <div class="app-container">
+        <!-- 1. Шапка профиля -->
+        <header class="header">
+            <div class="user-info">
+                <h1 id="username">Пользователь</h1>
+                <span id="user-status" class="status-badge">Новичок в финансах 🌱</span>
+            </div>
+            <div class="balance-card">
+                <span class="balance-label">Ваш баланс:</span>
+                <span id="balance-amount" class="balance-value">0 ₸</span>
+            </div>
+        </header>
+
+        <main>
+            <!-- 2. Блок "Задания" -->
+            <section class="section">
+                <h2>🎯 Задания</h2>
+                <p class="section-desc">Выполняйте задания, чтобы зарабатывать монеты и прокачивать навыки!</p>
+                <div class="cards-grid" id="tasks-container">
+                    <!-- Задания генерируются через JavaScript -->
+                </div>
+            </section>
+
+            <!-- 3. Блок "Вишлист / Копилка мечты" (Строго одна цель) -->
+            <section class="section">
+                <h2>✨ Копилка мечты (Вишлист)</h2>
+                <p class="section-desc">Выбери главную мечту, копи на неё понемногу и следи за прогрессом. Деньги уходят безвозвратно — планируй бюджет с умом!</p>
+                
+                <!-- Форма создания цели (скрывается, если цель уже есть) -->
+                <div class="card add-wish-card" id="form-container">
+                    <h3>Создать главную цель</h3>
+                    <div class="form-group">
+                        <input type="text" id="wish-title-input" placeholder="Например: iPad или Кроссовки" />
+                        <input type="number" id="wish-price-input" placeholder="Цена (мин. 1000 ₸)" min="1000" />
+                        <button class="btn btn-primary" onclick="addNewWish()">Создать цель</button>
+                    </div>
+                </div>
+
+                <!-- Карточка активной цели пользователя -->
+                <div class="cards-grid" id="wishlist-container">
+                    <!-- Цель генерируется через JavaScript -->
+                </div>
+            </section>
+        </main>
     </div>
-  </header>
 
-  <main class="container main-content">
-
-    <section class="section">
-      <h2>🎯 Задания</h2>
-      <p class="section-desc">Выполняйте задания, чтобы зарабатывать монеты и прокачивать навыки!</p>
-      
-      <div class="cards-grid" id="tasks-container">
-        </div>
-    </section>
-
-    <section class="section">
-      <h2>🛍️ Магазин целей</h2>
-      <p class="section-desc">Инвестируйте накопленные средства в полезные курсы и мечты!</p>
-      
-      <div class="cards-grid" id="shop-container">
-        </div>
-    </section>
-
-  </main>
-
-  <script src="script.js"></script>
+    <!-- Подключаем скрипт -->
+    <script src="script.js"></script>
 </body>
 </html>
