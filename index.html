@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  <!-- ШАПКА САЙТА -->
+  <!-- ШАПКА САЙТА С ПЕРЕКЛЮЧАТЕЛЕМ ЯЗЫКА -->
   <header class="header">
     <div class="container header-content">
       <div class="user-profile">
@@ -18,9 +18,19 @@
           <span class="status-badge" id="user-status">Новичок в финансах</span>
         </div>
       </div>
-      <div class="balance-card">
-        <span class="balance-label">Ваш баланс:</span>
-        <span class="balance-amount" id="balance-amount">0 ₸</span>
+
+      <!-- Блок баланса и переключения языка -->
+      <div style="display: flex; gap: 12px; align-items: center;">
+        <select id="lang-selector" onchange="changeLanguage(this.value)" style="background: #313244; color: #cdd6f4; border: 1px solid #45475a; padding: 6px 10px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+          <option value="ru">🇷🇺 RU</option>
+          <option value="kk">🇰🇿 KK</option>
+          <option value="en">🇬🇧 EN</option>
+        </select>
+
+        <div class="balance-card">
+          <span class="balance-label">Ваш баланс:</span>
+          <span class="balance-amount" id="balance-amount">0 ₸</span>
+        </div>
       </div>
     </div>
   </header>
@@ -85,7 +95,7 @@
         
         <p>Впишите желаемый предмет. Система сама оценит его реальную стоимость (от 10 000 ₸ до 50 000 ₸):</p>
 
-        <!-- Форма ввода названия (цену определяет система) -->
+        <!-- Форма ввода названия -->
         <form id="wishlist-form" onsubmit="setWishlistGoal(event)">
           <input type="text" id="wish-title-input" placeholder="Название (напр. Кроссовки, Наушники)" required>
           <button type="submit" class="btn btn-full" style="margin-top: 10px;">Загадать мечту 🚀</button>
