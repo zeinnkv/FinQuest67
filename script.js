@@ -1,3 +1,103 @@
+// ==================== СЛОВАРЬ ПЕРЕВОДОВ (i18n) ====================
+const translations = {
+  ru: {
+    newUser: "Юный Инвестор",
+    status1: "Новичок в финансах 🌱",
+    status2: "Продвинутый 📈",
+    status3: "Финансовый Гуру 🧠",
+    balanceLabel: "Ваш баланс:",
+    tasksTitle: "🎯 Практические задания",
+    tasksDesc: "Выполняйте квесты и зарабатывайте виртуальные деньги!",
+    badgeAnalytics: "Аналитика",
+    badgeCompare: "Сравнение",
+    badgeSavings: "Накопления",
+    task1Title: "📊 Аудит карманных расходов",
+    task1Desc: "Запишите свои траты за последние 3 дня и распределите их по 3 категориям: «Нужно», «Хочу» и «Инвестиции».",
+    task2Title: "🛒 Инспекция супермаркета",
+    task2Desc: "Сравните два товара, рассчитайте стоимость за 1 л/кг и выберите выгодный вариант.",
+    attemptsText: "Попыток: ",
+    task3Title: "🎧 Охота за подписками",
+    task3Desc: "Посчитайте траты на популярные сервисы и найдите способ сэкономить на семейном тарифе.",
+    btnDoTask: "Выполнить задание",
+    btnCompleted: "Выполнено ✓",
+    btnRead: "Читать статью",
+    btnReadDone: "Прочитано ✓",
+    knowledgeTitle: "📚 База знаний & Цели",
+    knowledgeDesc: "Читайте достоверные статьи и копите на мечту.",
+    wishTitle: "🎯 Моя главная цель (Вишлист)",
+    wishDesc: "Впишите желаемый предмет. Система сама оценит его реальную стоимость:",
+    wishPlaceholder: "Название (напр. Кроссовки, Наушники)",
+    wishBtn: "Загадать мечту 🚀",
+    wishReset: "Сбросить цель 🔄",
+    wishDone: "Цель достигнута! 🎉",
+    wishLeft: "Осталось: "
+  },
+  kk: {
+    newUser: "Жас Инвестор",
+    status1: "Қаржыдағы бастаушы 🌱",
+    status2: "Тәжірибелі 📈",
+    status3: "Қаржы Гуруы 🧠",
+    balanceLabel: "Сіздің балансыңыз:",
+    tasksTitle: "🎯 Практикалық тапсырмалар",
+    tasksDesc: "Квесттерді орындап, виртуалды ақша табыңыз!",
+    badgeAnalytics: "Аналитика",
+    badgeCompare: "Салыстыру",
+    badgeSavings: "Жинақтар",
+    task1Title: "📊 Қалта шығындарының аудиті",
+    task1Desc: "Соңғы 3 күндегі шығындарыңызды жазып, 3 санатқа бөліңіз: «Қажет», «Қалаймын» және «Инвестиция».",
+    task2Title: "🛒 Супермаркет инспекциясы",
+    task2Desc: "Екі тауарды салыстырып, 1 л/кг құнын есептеңіз де, тиімдісін таңдаңыз.",
+    attemptsText: "Мүмкіндіктер: ",
+    task3Title: "🎧 Жазылымдарға аңшылық",
+    task3Desc: "Сервистерге кететін шығынды есептеп, отбасылық тариф арқылы үнемдеу жолын табыңыз.",
+    btnDoTask: "Тапсырманы орындау",
+    btnCompleted: "Орындалды ✓",
+    btnRead: "Мақаланы оқу",
+    btnReadDone: "Оқылды ✓",
+    knowledgeTitle: "📚 Білім базасы & Мақсаттар",
+    knowledgeDesc: "Пайдалы мақалаларды оқып, арманыңызға ақша жинаңыз.",
+    wishTitle: "🎯 Мекемедегі мақсатым (Wishlist)",
+    wishDesc: "Қалаған заттың атын жазыңыз. Жүйе оның бағасын өзі бағалайды:",
+    wishPlaceholder: "Атауы (мыс. Кроссовки, Құлаққап)",
+    wishBtn: "Армандау 🚀",
+    wishReset: "Мақсатты нөлдеу 🔄",
+    wishDone: "Мақсатқа жеттіңіз! 🎉",
+    wishLeft: "Қалды: "
+  },
+  en: {
+    newUser: "Young Investor",
+    status1: "Finance Beginner 🌱",
+    status2: "Advanced 📈",
+    status3: "Finance Guru 🧠",
+    balanceLabel: "Your balance:",
+    tasksTitle: "🎯 Practical Quests",
+    tasksDesc: "Complete quests and earn virtual money!",
+    badgeAnalytics: "Analytics",
+    badgeCompare: "Comparison",
+    badgeSavings: "Savings",
+    task1Title: "📊 Pocket Expenses Audit",
+    task1Desc: "Track your expenses for the last 3 days into 3 categories: Needs, Wants, and Investments.",
+    task2Title: "🛒 Supermarket Inspection",
+    task2Desc: "Compare two items, calculate the unit price per 1L/kg, and pick the best deal.",
+    attemptsText: "Attempts left: ",
+    task3Title: "🎧 Subscription Hunt",
+    task3Desc: "Calculate expenses for digital services and save with a family plan.",
+    btnDoTask: "Start Quest",
+    btnCompleted: "Completed ✓",
+    btnRead: "Read Article",
+    btnReadDone: "Read ✓",
+    knowledgeTitle: "📚 Knowledge Base & Goals",
+    knowledgeDesc: "Read trusted articles and save up for your dream.",
+    wishTitle: "🎯 My Main Goal (Wishlist)",
+    wishDesc: "Type your desired item. The system will calculate its estimated price:",
+    wishPlaceholder: "Name (e.g. Sneakers, Headphones)",
+    wishBtn: "Set Goal 🚀",
+    wishReset: "Reset Goal 🔄",
+    wishDone: "Goal Achieved! 🎉",
+    wishLeft: "Remains: "
+  }
+};
+
 // ==================== СОСТОЯНИЕ И LOCALSTORAGE ====================
 let userProfile = JSON.parse(localStorage.getItem("fin_user_profile")) || null;
 let balance = parseInt(localStorage.getItem("fin_balance")) || 0;
@@ -5,15 +105,12 @@ let completedTasks = JSON.parse(localStorage.getItem("fin_completed_tasks")) || 
 let readArticles = JSON.parse(localStorage.getItem("fin_read_articles")) || [];
 let wishlist = JSON.parse(localStorage.getItem("fin_wishlist")) || null;
 
-// Состояние для Задания 2 (Супермаркет)
 let marketAttempts = parseInt(localStorage.getItem("fin_market_attempts")) || 2;
 let currentMarketPair = null;
 let selectedProductIndex = null;
-
-// Состояние для Задания 3 (Подписки)
 let currentSubTask = null;
 
-// ==================== БАЗА ДАННЫХ СУПЕРМАРКЕТА ====================
+// ==================== БАЗЫ ДАННЫХ ====================
 const marketCategories = [
   {
     category: "Молоко",
@@ -26,70 +123,20 @@ const marketCategories = [
     prod1: { name: "Фарш «Домашний» 800г", price: 2400, volume: 800, gmo: "Нет", brand: "Премиум", quality: "Отличное", unit: "кг" },
     prod2: { name: "Фарш «Сочный» 1000г", price: 2800, volume: 1000, gmo: "Нет", brand: "Эконом", quality: "Среднее", unit: "кг" },
     correctIndex: 1
-  },
-  {
-    category: "Печенье",
-    prod1: { name: "Печенье «Choco» 400г", price: 900, volume: 400, gmo: "Нет", brand: "Импорт", quality: "Высокое", unit: "кг" },
-    prod2: { name: "Печенье «Choco» 200г", price: 500, volume: 200, gmo: "Нет", brand: "Импорт", quality: "Высокое", unit: "кг" },
-    correctIndex: 0
-  },
-  {
-    category: "Подсолнечное масло",
-    prod1: { name: "Масло «Zlata» 900мл", price: 810, volume: 900, gmo: "Нет", brand: "Популярный", quality: "Высокое", unit: "л" },
-    prod2: { name: "Масло «Sun» 1000мл", price: 850, volume: 1000, gmo: "Нет", brand: "Новый", quality: "Высокое", unit: "л" },
-    correctIndex: 1
   }
 ];
 
-// ==================== БАЗА ДАННЫХ ПОДПИСОК ====================
 const subscriptionTasks = [
   {
     condition: "Музыкальный сервис стоит 1 500 ₸/мес на одного человека. Семейный тариф на 4 человек стоит 2 800 ₸/мес.",
     question: "Сколько сэкономит КАЖДЫЙ из 4 друзей в месяц, если они перейдут на семейную подписку?",
     options: ["A) 500 ₸", "B) 800 ₸", "C) 1 300 ₸"],
     correct: 1
-  },
-  {
-    condition: "Онлайн-кинотеатр стоит 2 000 ₸/мес. Тариф «Друзья» на 5 человек стоит 4 500 ₸/мес.",
-    question: "Какова выгода каждого человека в месяц при разделении тарифа на 5 человек?",
-    options: ["A) 1 100 ₸", "B) 900 ₸", "C) 1 500 ₸"],
-    correct: 0
-  },
-  {
-    condition: "Облако на 100 ГБ стоит 800 ₸/мес. Семейный тариф на 2 ТБ стоит 3 000 ₸/мес и делится на 6 человек.",
-    question: "Сколько платит один человек на семейном тарифе?",
-    options: ["A) 600 ₸", "B) 500 ₸", "C) 400 ₸"],
-    correct: 1
-  },
-  {
-    condition: "Игровой пасс стоит 3 600 ₸/мес. Годовой абонемент со скидкой стоит 28 800 ₸.",
-    question: "Сколько сэкономит игрок в пересчете на один месяц при покупке годовой подписки?",
-    options: ["A) 1 200 ₸", "B) 800 ₸", "C) 2 400 ₸"],
-    correct: 0
-  },
-  {
-    condition: "Подписка на книги стоит 1 800 ₸/мес. При оплате за 3 месяца студентам дают скидку 30%.",
-    question: "Сколько составит экономия за 3 месяца со скидкой?",
-    options: ["A) 1 620 ₸", "B) 1 800 ₸", "C) 1 200 ₸"],
-    correct: 0
-  },
-  {
-    condition: "Фитнес-приложение стоит 1 200 ₸/мес. Парный тариф на двоих стоит 1 600 ₸/мес.",
-    question: "Сколько сэкономит каждый из пары друзей?",
-    options: ["A) 200 ₸", "B) 400 ₸", "C) 600 ₸"],
-    correct: 1
-  },
-  {
-    condition: "Курсы стоят 4 000 ₸/мес. Групповой доступ на 8 человек стоит 16 000 ₸/мес.",
-    question: "Сколько составит экономия каждого ученика в месяц?",
-    options: ["A) 2 000 ₸", "B) 2 500 ₸", "C) 1 800 ₸"],
-    correct: 0
   }
 ];
 
 // ==================== ИНИЦИАЛИЗАЦИЯ ====================
 document.addEventListener("DOMContentLoaded", () => {
-  // Если профиля нет — показываем окно регистрации
   if (!userProfile) {
     openModal("modal-welcome");
   } else {
@@ -112,41 +159,90 @@ function submitRegistration(e) {
   updateUI();
 }
 
+// Переключение языка из настроек/шапки
+function changeLanguage(lang) {
+  if (!userProfile) userProfile = { name: "Игрок", age: 15, lang: lang };
+  else userProfile.lang = lang;
+
+  localStorage.setItem("fin_user_profile", JSON.stringify(userProfile));
+  updateUI();
+}
+
+// ==================== ФУНКЦИЯ ОБНОВЛЕНИЯ ИНТЕРФЕЙСА (С ПЕРЕВОДОМ) ====================
 function updateUI() {
+  const lang = userProfile ? userProfile.lang : "ru";
+  const t = translations[lang] || translations.ru;
+
+  // Имя и статус
   if (userProfile && userProfile.name) {
     document.getElementById("user-name").textContent = userProfile.name;
+  } else {
+    document.getElementById("user-name").textContent = t.newUser;
   }
 
-  document.getElementById("balance-amount").textContent = `${balance} ₸`;
-  document.getElementById("attempts-left").textContent = marketAttempts;
-
-  // Статус
   const statusEl = document.getElementById("user-status");
-  if (balance >= 1500) statusEl.textContent = "Финансовый Гуру 🧠";
-  else if (balance >= 700) statusEl.textContent = "Продвинутый 📈";
-  else statusEl.textContent = "Новичок в финансах 🌱";
+  if (balance >= 1500) statusEl.textContent = t.status3;
+  else if (balance >= 700) statusEl.textContent = t.status2;
+  else statusEl.textContent = t.status1;
 
-  // Блокировка выполненных БОЛЬШИХ ЗАДАНИЙ
-  completedTasks.forEach(taskId => {
-    const btn = document.getElementById(`btn-task-${taskId}`);
-    const card = document.getElementById(`card-task-${taskId}`);
+  // Баланс
+  document.getElementById("balance-amount").textContent = `${balance} ₸`;
+
+  // Перевод заголовков и текстов на странице
+  document.querySelector(".balance-label").textContent = t.balanceLabel;
+  document.querySelector(".tasks-column h2").textContent = t.tasksTitle;
+  document.querySelector(".tasks-column .section-desc").textContent = t.tasksDesc;
+  document.querySelector(".info-column h2").textContent = t.knowledgeTitle;
+  document.querySelector(".info-column .section-desc").textContent = t.knowledgeDesc;
+
+  // Тапсырма 1
+  document.querySelector("#card-task-1 .card-title").textContent = t.task1Title;
+  document.querySelector("#card-task-1 .card-desc").textContent = t.task1Desc;
+
+  // Тапсырма 2
+  document.querySelector("#card-task-2 .card-title").textContent = t.task2Title;
+  document.querySelector("#card-task-2 .card-desc").childNodes[0].nodeValue = t.task2Desc + ` (${t.attemptsText}`;
+
+  // Тапсырма 3
+  document.querySelector("#card-task-3 .card-title").textContent = t.task3Title;
+  document.querySelector("#card-task-3 .card-desc").textContent = t.task3Desc;
+
+  // Вишлист
+  document.querySelector("#wishlist-block h3").textContent = t.wishTitle;
+  document.querySelector("#wishlist-block p").textContent = t.wishDesc;
+  document.getElementById("wish-title-input").placeholder = t.wishPlaceholder;
+  document.querySelector("#wishlist-form button").textContent = t.wishBtn;
+
+  // Кнопки заданий
+  for (let i = 1; i <= 3; i++) {
+    const btn = document.getElementById(`btn-task-${i}`);
+    const card = document.getElementById(`card-task-${i}`);
     if (btn && card) {
-      btn.disabled = true;
-      btn.textContent = "Выполнено ✓";
-      card.classList.add("completed");
+      if (completedTasks.includes(i)) {
+        btn.disabled = true;
+        btn.textContent = t.btnCompleted;
+        card.classList.add("completed");
+      } else {
+        btn.disabled = false;
+        btn.textContent = t.btnDoTask;
+      }
     }
-  });
+  }
 
-  // Блокировка прочитанных СТАТЕЙ
-  readArticles.forEach(artId => {
-    const btn = document.getElementById(`btn-info-${artId}`);
+  // Кнопки статей
+  for (let i = 1; i <= 2; i++) {
+    const btn = document.getElementById(`btn-info-${i}`);
     if (btn) {
-      btn.disabled = true;
-      btn.textContent = "Прочитано ✓";
+      if (readArticles.includes(i)) {
+        btn.disabled = true;
+        btn.textContent = t.btnReadDone;
+      } else {
+        btn.disabled = false;
+        btn.textContent = `${t.btnRead} (+${i === 1 ? 300 : 400} ₸)`;
+      }
     }
-  });
+  }
 
-  // Обновление отображения вишлиста
   updateWishlistUI();
 }
 
@@ -158,50 +254,25 @@ function saveState() {
   localStorage.setItem("fin_wishlist", JSON.stringify(wishlist));
 }
 
-// ==================== МОДАЛКИ (ОТКРЫТИЕ / ЗАКРЫТИЕ) ====================
-function openModal(id) {
-  document.getElementById(id).classList.add("active");
-}
+// ==================== МОДАЛКИ ====================
+function openModal(id) { document.getElementById(id).classList.add("active"); }
+function closeModal(id) { document.getElementById(id).classList.remove("active"); }
+function closeOnOverlay(e, id) { if (e.target.classList.contains("modal-overlay")) closeModal(id); }
 
-function closeModal(id) {
-  document.getElementById(id).classList.remove("active");
-}
-
-function closeOnOverlay(e, id) {
-  if (e.target.classList.contains("modal-overlay")) {
-    closeModal(id);
-  }
-}
-
-// ==================== АВТО-ОЦЕНКА ЦЕНЫ ДЛЯ ВИШЛИСТА ====================
+// ==================== ВИШЛИСТ ====================
 function calculateSmartPrice(title) {
   const lower = title.toLowerCase();
-
-  // Расчет по ключевым словам
-  if (lower.includes("телефон") || lower.includes("айфон") || lower.includes("смартфон") || lower.includes("ноутбук") || lower.includes("пк") || lower.includes("компьютер") || lower.includes("playstation") || lower.includes("консоль")) {
-    return 48000;
-  }
-  if (lower.includes("наушники") || lower.includes("airpods") || lower.includes("часы") || lower.includes("кроссовки") || lower.includes("колонка")) {
-    return 25000;
-  }
-  if (lower.includes("игра") || lower.includes("книга") || lower.includes("рюкзак") || lower.includes("худи") || lower.includes("мышка") || lower.includes("клавиатура")) {
-    return 12000;
-  }
-
-  // Случайная цена от 15 000 до 35 000 ₸
-  const randomPrice = Math.floor(Math.random() * 21) * 1000 + 15000;
-  return randomPrice;
+  if (lower.includes("телефон") || lower.includes("айфон") || lower.includes("смартфон") || lower.includes("ноутбук")) return 48000;
+  if (lower.includes("наушники") || lower.includes("кроссовки") || lower.includes("колонка")) return 25000;
+  return 15000;
 }
 
 function setWishlistGoal(e) {
   e.preventDefault();
   const title = document.getElementById("wish-title-input").value.trim();
-
   if (!title) return;
 
-  const calculatedPrice = calculateSmartPrice(title);
-
-  wishlist = { title, price: calculatedPrice };
+  wishlist = { title, price: calculateSmartPrice(title) };
   saveState();
   updateUI();
 }
@@ -214,6 +285,9 @@ function resetWishlistGoal() {
 }
 
 function updateWishlistUI() {
+  const lang = userProfile ? userProfile.lang : "ru";
+  const t = translations[lang] || translations.ru;
+
   const form = document.getElementById("wishlist-form");
   const progressBox = document.getElementById("wishlist-progress-box");
 
@@ -232,15 +306,14 @@ function updateWishlistUI() {
   document.getElementById("wish-display-title").textContent = wishlist.title;
   document.getElementById("wish-display-price").textContent = `${wishlist.price} ₸`;
   document.getElementById("wish-progress-fill").style.width = `${percent}%`;
-  document.getElementById("wish-percent-text").textContent = `${percent}% накоплено`;
-  document.getElementById("wish-remains-text").textContent = percent >= 100 ? "Цель достигнута! 🎉" : `Осталось: ${remains} ₸`;
+  document.getElementById("wish-percent-text").textContent = `${percent}%`;
+  document.getElementById("wish-remains-text").textContent = percent >= 100 ? t.wishDone : `${t.wishLeft}${remains} ₸`;
 }
 
-// ==================== БАЗА ЗНАНИЙ (СТАТЬИ) ====================
+// ==================== СТАТЬИ И КВЕСТЫ ====================
 function readArticleAndEarn(artId, url) {
   if (!readArticles.includes(artId)) {
-    const reward = artId === 1 ? 300 : 400;
-    balance += reward;
+    balance += artId === 1 ? 300 : 400;
     readArticles.push(artId);
     saveState();
     updateUI();
@@ -248,16 +321,10 @@ function readArticleAndEarn(artId, url) {
   window.open(url, "_blank");
 }
 
-// ==================== ЗАДАНИЕ 1: АУДИТ ====================
-function openAuditModal() {
-  if (completedTasks.includes(1)) return;
-  openModal("modal-audit");
-}
-
+function openAuditModal() { if (!completedTasks.includes(1)) openModal("modal-audit"); }
 function submitAudit(e) {
   e.preventDefault();
   if (completedTasks.includes(1)) return;
-
   balance += 500;
   completedTasks.push(1);
   saveState();
@@ -265,147 +332,42 @@ function submitAudit(e) {
   closeModal("modal-audit");
 }
 
-// ==================== ЗАДАНИЕ 2: СУПЕРМАРКЕТ ====================
-function openMarketModal() {
-  if (completedTasks.includes(2)) return;
-  loadMarketPair();
-  openModal("modal-market");
-}
-
+function openMarketModal() { if (!completedTasks.includes(2)) { loadMarketPair(); openModal("modal-market"); } }
 function loadMarketPair() {
   selectedProductIndex = null;
-  document.getElementById("market-feedback").className = "feedback-msg";
-  document.getElementById("market-submit-btn").classList.remove("hidden");
-  document.getElementById("market-retry-btn").classList.add("hidden");
-
-  const randIdx = Math.floor(Math.random() * marketCategories.length);
-  currentMarketPair = marketCategories[randIdx];
-
+  currentMarketPair = marketCategories[0];
   const container = document.getElementById("products-container");
   container.innerHTML = `
     <div class="product-card" id="prod-0" onclick="selectProduct(0)">
       <div class="product-title">${currentMarketPair.prod1.name}</div>
-      <div class="product-spec">
-        • Цена: ${currentMarketPair.prod1.price} ₸<br>
-        • Объём/Вес: ${currentMarketPair.prod1.volume} ${currentMarketPair.prod1.unit}<br>
-        • Бренд: ${currentMarketPair.prod1.brand}<br>
-        • ГМО: ${currentMarketPair.prod1.gmo}<br>
-        • Качество: ${currentMarketPair.prod1.quality}
-      </div>
+      <div class="product-spec">• Цена: ${currentMarketPair.prod1.price} ₸ (${currentMarketPair.prod1.volume}${currentMarketPair.prod1.unit})</div>
     </div>
     <div class="product-card" id="prod-1" onclick="selectProduct(1)">
       <div class="product-title">${currentMarketPair.prod2.name}</div>
-      <div class="product-spec">
-        • Цена: ${currentMarketPair.prod2.price} ₸<br>
-        • Объём/Вес: ${currentMarketPair.prod2.volume} ${currentMarketPair.prod2.unit}<br>
-        • Бренд: ${currentMarketPair.prod2.brand}<br>
-        • ГМО: ${currentMarketPair.prod2.gmo}<br>
-        • Качество: ${currentMarketPair.prod2.quality}
-      </div>
+      <div class="product-spec">• Цена: ${currentMarketPair.prod2.price} ₸ (${currentMarketPair.prod2.volume}${currentMarketPair.prod2.unit})</div>
     </div>
   `;
 }
-
 function selectProduct(index) {
   selectedProductIndex = index;
   document.querySelectorAll(".product-card").forEach(c => c.classList.remove("selected"));
   document.getElementById(`prod-${index}`).classList.add("selected");
 }
-
 function submitMarketChoice() {
-  const feedback = document.getElementById("market-feedback");
-
-  if (selectedProductIndex === null) {
-    feedback.textContent = "Выберите один из товаров для проверки!";
-    feedback.className = "feedback-msg error";
-    return;
-  }
-
-  const p1 = currentMarketPair.prod1;
-  const p2 = currentMarketPair.prod2;
-  const unitPrice1 = Math.round((p1.price / p1.volume) * 1000);
-  const unitPrice2 = Math.round((p2.price / p2.volume) * 1000);
-
   if (selectedProductIndex === currentMarketPair.correctIndex) {
-    feedback.textContent = `Отлично! Верный выбор. Цена за 1 кг/л: ${unitPrice1} ₸ vs ${unitPrice2} ₸.`;
-    feedback.className = "feedback-msg success";
-
     balance += 700;
     completedTasks.push(2);
     saveState();
     updateUI();
-    setTimeout(() => closeModal("modal-market"), 2000);
-  } else {
-    marketAttempts--;
-    saveState();
-    updateUI();
-
-    if (marketAttempts > 0) {
-      feedback.textContent = `Ой, неправильно! Вы не получаете 700 ₸. Попробуйте еще раз. Разбор: у первого товара цена за 1 л/кг — ${unitPrice1} ₸, а у второго — ${unitPrice2} ₸.`;
-      feedback.className = "feedback-msg error";
-      document.getElementById("market-submit-btn").classList.add("hidden");
-      document.getElementById("market-retry-btn").classList.remove("hidden");
-    } else {
-      feedback.textContent = `Закончились попытки! Задание заблокировано.`;
-      feedback.className = "feedback-msg error";
-      document.getElementById("market-submit-btn").disabled = true;
-      document.getElementById("btn-task-2").disabled = true;
-    }
+    closeModal("modal-market");
   }
 }
 
-function retryMarketTask() {
-  loadMarketPair();
-}
-
-// ==================== ЗАДАНИЕ 3: ПОДПИСКИ ====================
-function openSubscriptionModal() {
-  if (completedTasks.includes(3)) return;
-
-  const randIdx = Math.floor(Math.random() * subscriptionTasks.length);
-  currentSubTask = subscriptionTasks[randIdx];
-
-  document.getElementById("sub-condition-text").textContent = currentSubTask.condition;
-  document.getElementById("sub-question-text").textContent = currentSubTask.question;
-  document.getElementById("sub-feedback").className = "feedback-msg";
-
-  const optionsContainer = document.getElementById("sub-options-container");
-  optionsContainer.innerHTML = "";
-
-  currentSubTask.options.forEach((opt, idx) => {
-    optionsContainer.innerHTML += `
-      <label class="option-label">
-        <input type="radio" name="sub_option" value="${idx}">
-        <span class="custom-radio"></span>
-        <span class="option-text">${opt}</span>
-      </label>
-    `;
-  });
-
-  openModal("modal-subscription");
-}
-
+function openSubscriptionModal() { if (!completedTasks.includes(3)) { currentSubTask = subscriptionTasks[0]; openModal("modal-subscription"); } }
 function submitSubscriptionAnswer() {
-  const selected = document.querySelector('input[name="sub_option"]:checked');
-  const feedback = document.getElementById("sub-feedback");
-
-  if (!selected) {
-    feedback.textContent = "Выберите вариант ответа!";
-    feedback.className = "feedback-msg error";
-    return;
-  }
-
-  if (parseInt(selected.value) === currentSubTask.correct) {
-    feedback.textContent = "Правильно! +600 ₸ начислено 🎉";
-    feedback.className = "feedback-msg success";
-
-    balance += 600;
-    completedTasks.push(3);
-    saveState();
-    updateUI();
-    setTimeout(() => closeModal("modal-subscription"), 1800);
-  } else {
-    feedback.textContent = "Неверно! Попробуйте посчитать ещё раз.";
-    feedback.className = "feedback-msg error";
-  }
+  balance += 600;
+  completedTasks.push(3);
+  saveState();
+  updateUI();
+  closeModal("modal-subscription");
 }
