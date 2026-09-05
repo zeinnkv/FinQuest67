@@ -132,7 +132,7 @@ let subscriptionTasks = [
 let selectedProductIndex = null;
 let currentMarketPair = null;
 
-// ==================== ИНИЦИАЛИЗАЦИЯ И ПРИВЯЗКА СОБЫТИЙ ====================
+// ==================== ИНИЦИАЛИЗАЦИЯ ====================
 document.addEventListener("DOMContentLoaded", () => {
   if (!userProfile) {
     openModal("modal-welcome");
@@ -142,12 +142,10 @@ document.addEventListener("DOMContentLoaded", () => {
     updateUI();
   }
 
-  // Принудительное назначение обработчиков для надежного клика по кнопкам
   setupEventListeners();
 });
 
 function setupEventListeners() {
-  // Селектор языка с перезагрузкой страницы
   const langSelect = document.getElementById("lang-selector");
   if (langSelect) {
     langSelect.addEventListener("change", (e) => {
@@ -155,20 +153,39 @@ function setupEventListeners() {
     });
   }
 
-  // Кнопка регистрации
   const regForm = document.getElementById("reg-form");
   if (regForm) {
     regForm.addEventListener("submit", submitRegistration);
   }
 
-  // Форма вишлиста
   const wishForm = document.getElementById("wishlist-form");
   if (wishForm) {
     wishForm.addEventListener("submit", setWishlistGoal);
   }
+
+  // Привязка кнопок заданий
+  const btn1 = document.getElementById("btn-task-1");
+  if (btn1) btn1.addEventListener("click", openAuditModal);
+
+  const btn2 = document.getElementById("btn-task-2");
+  if (btn2) btn2.addEventListener("click", openMarketModal);
+
+  const btn3 = document.getElementById("btn-task-3");
+  if (btn3) btn3.addEventListener("click", openSubscriptionModal);
+
+  // Ссылки на статьи с перенаправлением на нужные сайты
+  const btnInfo1 = document.getElementById("btn-info-1");
+  if (btnInfo1) {
+    btnInfo1.addEventListener("click", () => readArticleAndEarn(1, "https://www.bcc.kz/bcc-journal/category/glossary/deposit-2/"));
+  }
+
+  const btnInfo2 = document.getElementById("btn-info-2");
+  if (btnInfo2) {
+    btnInfo2.addEventListener("click", () => readArticleAndEarn(2, "https://www.nur.kz/nurfin/personal/2042493-finansovaya-podushka-bezopasnosti-kak-ee-sozdat-i-gde-hranit/"));
+  }
 }
 
-// Отправка формы регистрации
+// Регистрация
 function submitRegistration(e) {
   e.preventDefault();
   const nameInput = document.getElementById("reg-name");
@@ -190,7 +207,7 @@ function submitRegistration(e) {
   window.location.reload();
 }
 
-// Переключение языка с перезагрузкой сайта
+// Смена языка с перезагрузкой
 function changeLanguage(lang) {
   if (!userProfile) {
     userProfile = { name: "Пользователь", age: 15, lang: lang };
@@ -199,7 +216,7 @@ function changeLanguage(lang) {
   }
 
   localStorage.setItem("fin_user_profile", JSON.stringify(userProfile));
-  window.location.reload(); // Перезагружаем страницу для полного применения языка
+  window.location.reload();
 }
 
 // ==================== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА ====================
@@ -207,7 +224,6 @@ function updateUI() {
   const lang = userProfile ? userProfile.lang : "ru";
   const t = translations[lang] || translations.ru;
 
-  // Имя и статус
   const userNameEl = document.getElementById("user-name");
   if (userNameEl) {
     userNameEl.textContent = (userProfile && userProfile.name) ? userProfile.name : t.newUser;
@@ -220,11 +236,9 @@ function updateUI() {
     else statusEl.textContent = t.status1;
   }
 
-  // Баланс
   const balanceAmountEl = document.getElementById("balance-amount");
   if (balanceAmountEl) balanceAmountEl.textContent = `${balance} ₸`;
 
-  // Перевод текста статических элементов
   const balanceLabelEl = document.querySelector(".balance-label");
   if (balanceLabelEl) balanceLabelEl.textContent = t.balanceLabel;
 
@@ -248,7 +262,9 @@ function updateUI() {
   const task2Title = document.querySelector("#card-task-2 .card-title");
   if (task2Title) task2Title.textContent = t.task2Title;
   const task2Desc = document.querySelector("#card-task-2 .card-desc");
-  if (task2Desc) task2Desc.childNodes[0].nodeValue = t.task2Desc + ` (${t.attemptsText}`;
+  if (task2Desc && task2Desc.childNodes[0]) {
+    task2Desc.childNodes[0].nodeValue = t.task2Desc + ` (${t.attemptsText}`;
+  }
 
   const task3Title = document.querySelector("#card-task-3 .card-title");
   if (task3Title) task3Title.textContent = t.task3Title;
@@ -309,7 +325,7 @@ function saveState() {
   localStorage.setItem("fin_wishlist", JSON.stringify(wishlist));
 }
 
-// ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================
+// ==================== МОДАЛЬНЫЕ ОКНА ====================
 function openModal(id) {
   const modal = document.getElementById(id);
   if (modal) modal.classList.add("active");
@@ -324,7 +340,7 @@ function closeOnOverlay(e, id) {
   if (e.target.classList.contains("modal-overlay")) closeModal(id);
 }
 
-// ==================== ЛОГИКА ВИШЛИСТА ====================
+// ==================== ВИШЛИСТ (ЦЕЛИ) ====================
 function calculateSmartPrice(title) {
   const lower = title.toLowerCase();
   let basePrice = 15000;
@@ -342,7 +358,7 @@ function calculateSmartPrice(title) {
 }
 
 function setWishlistGoal(e) {
-  e.preventDefault();
+  if (e) e.preventDefault();
   const inputEl = document.getElementById("wish-title-input");
   if (!inputEl) return;
 
@@ -439,7 +455,7 @@ function updateWishlistUI() {
   }
 }
 
-// ==================== ДЕЙСТВИЯ ЗАДАНИЙ И СТАТЕЙ ====================
+// ==================== ЗАДАНИЯ И СТАТЬИ ====================
 function readArticleAndEarn(artId, url) {
   if (!readArticles.includes(artId)) {
     balance += artId === 1 ? 300 : 400;
@@ -455,7 +471,7 @@ function openAuditModal() {
 }
 
 function submitAudit(e) {
-  e.preventDefault();
+  if (e) e.preventDefault();
   if (completedTasks.includes(1)) return;
   balance += 500;
   completedTasks.push(1);
