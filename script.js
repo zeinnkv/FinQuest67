@@ -1,4 +1,5 @@
 // ==================== СОСТОЯНИЕ И LOCALSTORAGE ====================
+let userProfile = JSON.parse(localStorage.getItem("fin_user_profile")) || null;
 let balance = parseInt(localStorage.getItem("fin_balance")) || 0;
 let completedTasks = JSON.parse(localStorage.getItem("fin_completed_tasks")) || [];
 let readArticles = JSON.parse(localStorage.getItem("fin_read_articles")) || [];
@@ -40,7 +41,7 @@ const marketCategories = [
   }
 ];
 
-// ==================== БАЗА ДАННЫХ 7 ПОДПИСОК ====================
+// ==================== БАЗА ДАННЫХ ПОДПИСОК ====================
 const subscriptionTasks = [
   {
     condition: "Музыкальный сервис стоит 1 500 ₸/мес на одного человека. Семейный тариф на 4 человек стоит 2 800 ₸/мес.",
@@ -88,14 +89,38 @@ const subscriptionTasks = [
 
 // ==================== ИНИЦИАЛИЗАЦИЯ ====================
 document.addEventListener("DOMContentLoaded", () => {
-  updateUI();
+  // Если профиля нет — показываем окно регистрации
+  if (!userProfile) {
+    openModal("modal-welcome");
+  } else {
+    updateUI();
+  }
 });
 
+function submitRegistration(e) {
+  e.preventDefault();
+  const name = document.getElementById("reg-name").value.trim();
+  const age = parseInt(document.getElementById("reg-age").value);
+  const lang = document.getElementById("reg-lang").value;
+
+  if (!name || !age) return;
+
+  userProfile = { name, age, lang };
+  localStorage.setItem("fin_user_profile", JSON.stringify(userProfile));
+
+  closeModal("modal-welcome");
+  updateUI();
+}
+
 function updateUI() {
+  if (userProfile && userProfile.name) {
+    document.getElementById("user-name").textContent = userProfile.name;
+  }
+
   document.getElementById("balance-amount").textContent = `${balance} ₸`;
   document.getElementById("attempts-left").textContent = marketAttempts;
 
-  // Динамический статус
+  // Статус
   const statusEl = document.getElementById("user-status");
   if (balance >= 1500) statusEl.textContent = "Финансовый Гуру 🧠";
   else if (balance >= 700) statusEl.textContent = "Продвинутый 📈";
@@ -148,18 +173,35 @@ function closeOnOverlay(e, id) {
   }
 }
 
-// ==================== ВИШЛИСТ (ЦЕЛЬ) ====================
+// ==================== АВТО-ОЦЕНКА ЦЕНЫ ДЛЯ ВИШЛИСТА ====================
+function calculateSmartPrice(title) {
+  const lower = title.toLowerCase();
+
+  // Расчет по ключевым словам
+  if (lower.includes("телефон") || lower.includes("айфон") || lower.includes("смартфон") || lower.includes("ноутбук") || lower.includes("пк") || lower.includes("компьютер") || lower.includes("playstation") || lower.includes("консоль")) {
+    return 48000;
+  }
+  if (lower.includes("наушники") || lower.includes("airpods") || lower.includes("часы") || lower.includes("кроссовки") || lower.includes("колонка")) {
+    return 25000;
+  }
+  if (lower.includes("игра") || lower.includes("книга") || lower.includes("рюкзак") || lower.includes("худи") || lower.includes("мышка") || lower.includes("клавиатура")) {
+    return 12000;
+  }
+
+  // Случайная цена от 15 000 до 35 000 ₸
+  const randomPrice = Math.floor(Math.random() * 21) * 1000 + 15000;
+  return randomPrice;
+}
+
 function setWishlistGoal(e) {
   e.preventDefault();
   const title = document.getElementById("wish-title-input").value.trim();
-  const price = parseInt(document.getElementById("wish-price-input").value);
 
-  if (price < 10000 || price > 50000) {
-    alert("Сумма цели должна быть от 10 000 ₸ до 50 000 ₸!");
-    return;
-  }
+  if (!title) return;
 
-  wishlist = { title, price };
+  const calculatedPrice = calculateSmartPrice(title);
+
+  wishlist = { title, price: calculatedPrice };
   saveState();
   updateUI();
 }
