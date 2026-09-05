@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  <!-- ШАПКА САЙТА С ПЕРЕКЛЮЧАТЕЛЕМ ЯЗЫКА -->
+  <!-- ШАПКА САЙТА -->
   <header class="header">
     <div class="container header-content">
       <div class="user-profile">
@@ -19,9 +19,8 @@
         </div>
       </div>
 
-      <!-- Блок баланса и переключения языка -->
-      <div style="display: flex; gap: 12px; align-items: center;">
-        <select id="lang-selector" onchange="changeLanguage(this.value)" style="background: #313244; color: #cdd6f4; border: 1px solid #45475a; padding: 6px 10px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+      <div class="header-controls">
+        <select id="lang-selector" onchange="changeLanguage(this.value)">
           <option value="ru">🇷🇺 RU</option>
           <option value="kk">🇰🇿 KK</option>
           <option value="en">🇬🇧 EN</option>
@@ -35,17 +34,25 @@
     </div>
   </header>
 
-  <!-- ОСНОВНОЙ КОНТЕНТ (ДВЕ КОЛОНКИ) -->
-  <main class="container main-layout">
+  <!-- НАВИГАЦИОННЫЕ ВКЛАДКИ -->
+  <nav class="container nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('tasks', event)" id="tab-btn-tasks">🎯 Квесты</button>
+    <button class="tab-btn" onclick="switchTab('knowledge', event)" id="tab-btn-knowledge">📚 База знаний</button>
+    <button class="tab-btn" onclick="switchTab('wishlist', event)" id="tab-btn-wishlist">🚀 Моя копилка</button>
+  </nav>
 
-    <!-- ЛЕВАЯ КОЛОНКА: ИНТЕРАКТИВНЫЕ БОЛЬШИЕ ЗАДАНИЯ -->
-    <section class="column tasks-column">
-      <h2>🎯 Практические задания</h2>
-      <p class="section-desc">Выполняйте квесты и зарабатывайте виртуальные деньги!</p>
+  <!-- ОСНОВНОЙ КОНТЕНТ (ВКЛАДКИ) -->
+  <main class="container main-content">
 
-      <div class="cards-list">
+    <!-- ВКЛАДКА 1: КВЕСТЫ -->
+    <section class="tab-pane active" id="tab-tasks">
+      <div class="section-header">
+        <h2>Практические задания</h2>
+        <p class="section-desc">Выполняйте квесты и зарабатывайте виртуальные деньги!</p>
+      </div>
 
-        <!-- Задание 1: Аудит расходов -->
+      <div class="cards-grid">
+        <!-- Задание 1 -->
         <div class="card" id="card-task-1">
           <div class="card-header">
             <span class="badge blue">Аналитика</span>
@@ -56,7 +63,7 @@
           <button class="btn" id="btn-task-1" onclick="openAuditModal()">Выполнить задание</button>
         </div>
 
-        <!-- Задание 2: Инспектор супермаркета -->
+        <!-- Задание 2 -->
         <div class="card" id="card-task-2">
           <div class="card-header">
             <span class="badge purple">Сравнение</span>
@@ -67,7 +74,7 @@
           <button class="btn" id="btn-task-2" onclick="openMarketModal()">Выполнить задание</button>
         </div>
 
-        <!-- Задание 3: Охота за подписками -->
+        <!-- Задание 3 -->
         <div class="card" id="card-task-3">
           <div class="card-header">
             <span class="badge blue">Аналитика</span>
@@ -77,90 +84,102 @@
           <p class="card-desc">Посчитайте траты на популярные сервисы и найдите способ сэкономить на семейном тарифе.</p>
           <button class="btn" id="btn-task-3" onclick="openSubscriptionModal()">Выполнить задание</button>
         </div>
-
       </div>
     </section>
 
-    <!-- ПРАВАЯ КОЛОНКА: БАЗА ЗНАНИЙ И ВИШЛИСТ -->
-    <section class="column info-column">
-      <h2>📚 База знаний & Цели</h2>
-      <p class="section-desc">Читайте достоверные статьи и копите на мечту.</p>
+    <!-- ВКЛАДКА 2: БАЗА ЗНАНИЙ -->
+    <section class="tab-pane" id="tab-knowledge">
+      <div class="section-header">
+        <h2>База знаний & Лайфхаки</h2>
+        <p class="section-desc">Читайте достоверные статьи и изучайте финансовые правила.</p>
+      </div>
 
-      <!-- БЛОК ВИШЛИСТА (МЕЧТА) -->
-      <div class="info-card wishlist-card" id="wishlist-block">
+      <div class="cards-grid">
+        <!-- Статья 1 -->
+        <div class="info-card" id="info-card-1">
+          <div class="info-header">
+            <h3>🏦 Что такое депозит и как работают вклады?</h3>
+            <span class="reward">+300 ₸</span>
+          </div>
+          <p>Узнайте, как деньги в банке приносят пассивный доход за счет сложных процентов и почему депозит защищен государством.</p>
+          <button class="btn btn-secondary" id="btn-info-1" onclick="readArticleAndEarn(1, 'https://fingramota.kz/ru/rubric/deposits')">Читать статью (+300 ₸)</button>
+        </div>
+
+        <!-- Статья 2 -->
+        <div class="info-card" id="info-card-2">
+          <div class="info-header">
+            <h3>🛡️ Финансовая подушка безопасности</h3>
+            <span class="reward">+400 ₸</span>
+          </div>
+          <p>Зачем нужен запас денег на «черный день», сколько месячных расходов он должен закрывать и где его правильно хранить.</p>
+          <button class="btn btn-secondary" id="btn-info-2" onclick="readArticleAndEarn(2, 'https://fingramota.kz/ru/news/chto-takoe-finansovaya-podushka-bezopasnosti-i-kak-ee-sformirovat')">Читать статью (+400 ₸)</button>
+        </div>
+
+        <!-- Лайфхак -->
+        <div class="info-card hint">
+          <h3>💡 Быстрый лайфхак: Правило 50/30/20</h3>
+          <p>Делите доходы: <strong>50%</strong> — на обязательные нужды, <strong>30%</strong> — на желания и развлечения, <strong>20%</strong> — откладывайте в сбережения.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ВКЛАДКА 3: МОЯ КОПИЛКА (ВИШЛИСТ) -->
+    <section class="tab-pane" id="tab-wishlist">
+      <div class="section-header">
+        <h2>Моя главная цель (Копилка)</h2>
+        <p class="section-desc">Загадайте мечту, копите деньги и следите за прогрессом!</p>
+      </div>
+
+      <div class="wishlist-hero-card" id="wishlist-block">
         <div class="info-header">
-          <h3>🎯 Моя главная цель (Вишлист)</h3>
+          <h3>🎯 Цель на мечту</h3>
           <span class="badge blue">Накопления</span>
         </div>
         
-        <p>Впишите желаемый предмет. Система сама оценит его стоимость (от 10 000 ₸ и выше):</p>
+        <p id="wish-desc-text">Впишите желаемый предмет. Система сама оценит его стоимость (от 10 000 ₸ и выше):</p>
 
-        <!-- Форма ввода названия -->
+        <!-- Форма ввода -->
         <form id="wishlist-form" onsubmit="setWishlistGoal(event)">
-          <input type="text" id="wish-title-input" placeholder="Название (напр. Наушники)" required>
-          <button type="submit" class="btn btn-full" style="margin-top: 10px;">Загадать мечту 🚀</button>
+          <div class="wish-form-group">
+            <input type="text" id="wish-title-input" placeholder="Название (напр. Наушники, Кроссовки)" required>
+            <button type="submit" class="btn">Загадать мечту 🚀</button>
+          </div>
         </form>
 
-        <!-- Блок прогресса и пополнения -->
+        <!-- Блок прогресса -->
         <div id="wishlist-progress-box" class="hidden">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-            <strong id="wish-display-title" style="color: #fab387;"></strong>
-            <span id="wish-display-price" style="font-weight: 700; color: #a6e3a1;"></span>
+          <div class="wish-info-row">
+            <strong id="wish-display-title"></strong>
+            <span id="wish-display-price"></span>
           </div>
           
-          <!-- Шкала прогресса -->
           <div class="progress-bar-bg">
             <div class="progress-bar-fill" id="wish-progress-fill"></div>
           </div>
 
-          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-top: 6px; color: #a6adc8;">
+          <div class="wish-stats-row">
             <span id="wish-percent-text">0% накоплено</span>
             <span id="wish-remains-text">Осталось: 0 ₸</span>
           </div>
 
-          <p style="font-size: 0.85rem; margin-top: 12px; margin-bottom: 6px; color: #cdd6f4;">Сколько отложить из баланса?</p>
-          <div style="display: flex; gap: 8px;">
-            <input type="number" id="wish-deposit-input" placeholder="Сумма (₸)" min="1" style="flex: 1; padding: 6px 10px; border-radius: 6px; border: 1px solid #45475a; background: #313244; color: #cdd6f4;">
-            <button class="btn" onclick="depositToWishlist()" style="padding: 6px 12px; font-size: 0.85rem;">Отложить</button>
+          <div class="deposit-box">
+            <p id="deposit-label" style="font-size: 0.9rem; margin-bottom: 8px; color: #cdd6f4;">Сколько отложить из баланса?</p>
+            <div style="display: flex; gap: 10px;">
+              <input type="number" id="wish-deposit-input" placeholder="Сумма (₸)" min="1">
+              <button class="btn" onclick="depositToWishlist()" id="deposit-action-btn">Отложить</button>
+            </div>
           </div>
 
-          <button class="btn btn-secondary" onclick="resetWishlistGoal()" style="margin-top: 10px; font-size: 0.8rem; padding: 6px; width: 100%;">Сбросить цель 🔄</button>
+          <button class="btn btn-secondary" onclick="resetWishlistGoal()" style="margin-top: 15px; width: 100%;">Сбросить цель 🔄</button>
         </div>
       </div>
-
-      <!-- Статья 1: Депозиты -->
-      <div class="info-card" id="info-card-1">
-        <div class="info-header">
-          <h3>🏦 Что такое депозит и как работают вклады?</h3>
-          <span class="reward">+300 ₸</span>
-        </div>
-        <p>Узнайте, как деньги в банке приносят пассивный доход за счет сложных процентов и почему депозит защищен государством.</p>
-        <button class="btn btn-secondary" id="btn-info-1" onclick="readArticleAndEarn(1, 'https://fingramota.kz/ru/rubric/deposits')">Читать статью (+300 ₸)</button>
-      </div>
-
-      <!-- Статья 2: Подушка безопасности -->
-      <div class="info-card" id="info-card-2">
-        <div class="info-header">
-          <h3>🛡️ Финансовая подушка безопасности</h3>
-          <span class="reward">+400 ₸</span>
-        </div>
-        <p>Зачем нужен запас денег на «черный день», сколько месячных расходов он должен закрывать и где его правильно хранить.</p>
-        <button class="btn btn-secondary" id="btn-info-2" onclick="readArticleAndEarn(2, 'https://fingramota.kz/ru/news/chto-takoe-finansovaya-podushka-bezopasnosti-i-kak-ee-sformirovat')">Читать статью (+400 ₸)</button>
-      </div>
-
-      <!-- Лайфхак -->
-      <div class="info-card hint">
-        <h3>💡 Быстрый лайфхак: Правило 50/30/20</h3>
-        <p>Делите доходы: <strong>50%</strong> — на обязательные нужды, <strong>30%</strong> — на желания и развлечения, <strong>20%</strong> — откладывайте в сбережения.</p>
-      </div>
-
     </section>
 
   </main>
 
   <!-- ==================== МОДАЛЬНЫЕ ОКНА ==================== -->
 
-  <!-- МОДАЛКА 0: РЕГИСТРАЦИЯ ПРИ ПЕРВОМ ВХОДЕ -->
+  <!-- МОДАЛКА 0: РЕГИСТРАЦИЯ -->
   <div class="modal-overlay" id="modal-welcome">
     <div class="modal-window">
       <h2>👋 Добро пожаловать в FinQuest!</h2>
@@ -191,7 +210,7 @@
     </div>
   </div>
 
-  <!-- МОДАЛКА 1: АУДИТ РАСХОДОВ -->
+  <!-- МОДАЛКА 1: АУДИТ -->
   <div class="modal-overlay" id="modal-audit" onclick="closeOnOverlay(event, 'modal-audit')">
     <div class="modal-window">
       <button class="close-btn" onclick="closeModal('modal-audit')">&times;</button>
@@ -235,7 +254,7 @@
     </div>
   </div>
 
-  <!-- МОДАЛКА 2: ИНСПЕКТОР СУПЕРМАРКЕТА -->
+  <!-- МОДАЛКА 2: СУПЕРМАРКЕТ -->
   <div class="modal-overlay" id="modal-market" onclick="closeOnOverlay(event, 'modal-market')">
     <div class="modal-window wide">
       <button class="close-btn" onclick="closeModal('modal-market')">&times;</button>
@@ -243,15 +262,13 @@
       <p class="modal-subtitle">Сравните два товара по категориям и выберите наиболее выгодный:</p>
 
       <div class="products-compare" id="products-container"></div>
-
       <div id="market-feedback" class="feedback-msg"></div>
 
       <button class="btn btn-full" id="market-submit-btn" onclick="submitMarketChoice()">Проверить выбор (+700 ₸)</button>
-      <button class="btn btn-full secondary hidden" id="market-retry-btn" onclick="retryMarketTask()">Попробовать ещё раз 🔄</button>
     </div>
   </div>
 
-  <!-- МОДАЛКА 3: ОХОТА ЗА ПОДПИСКАМИ -->
+  <!-- МОДАЛКА 3: ПОДПИСКИ -->
   <div class="modal-overlay" id="modal-subscription" onclick="closeOnOverlay(event, 'modal-subscription')">
     <div class="modal-window">
       <button class="close-btn" onclick="closeModal('modal-subscription')">&times;</button>
@@ -262,9 +279,7 @@
       </div>
 
       <p class="question-text" id="sub-question-text">Загрузка...</p>
-
       <div class="options-group" id="sub-options-container"></div>
-
       <div id="sub-feedback" class="feedback-msg"></div>
 
       <button class="btn btn-full" onclick="submitSubscriptionAnswer()">Отправить ответ (+600 ₸)</button>
@@ -272,7 +287,5 @@
   </div>
 
   <script src="script.js"></script>
-</body>
-</html>script.js"></script>
 </body>
 </html>
