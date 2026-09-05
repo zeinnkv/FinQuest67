@@ -194,12 +194,6 @@ section h2 {
   background: #45475a;
 }
 
-.btn-secondary:disabled {
-  background: #313244;
-  color: #6c7086;
-  cursor: not-allowed;
-}
-
 .tip-card {
   border-left: 4px solid #f9e2af;
 }
@@ -236,7 +230,7 @@ section h2 {
 .modal-overlay {
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(17, 17, 27, 0.8);
+  background: rgba(17, 17, 27, 0.85);
   display: none;
   justify-content: center;
   align-items: center;
@@ -251,7 +245,7 @@ section h2 {
   background: #181825;
   padding: 30px;
   border-radius: 20px;
-  width: 400px;
+  width: 420px;
   max-width: 90%;
   border: 1px solid #313244;
   box-shadow: 0 10px 25px rgba(0,0,0,0.5);
@@ -268,12 +262,15 @@ section h2 {
   font-size: 14px;
 }
 
+/* Карточки товаров супермаркета */
 .product-card {
   background: #313244;
-  padding: 12px;
-  border-radius: 10px;
+  padding: 10px;
+  border-radius: 12px;
   cursor: pointer;
   border: 2px solid transparent;
+  text-align: center;
+  transition: 0.2s;
 }
 
 .product-card.selected {
@@ -281,13 +278,20 @@ section h2 {
   background: #252538;
 }
 
+.product-img {
+  font-size: 38px;
+  margin-bottom: 5px;
+}
+
 .product-title {
   font-weight: bold;
   color: #cdd6f4;
+  font-size: 14px;
 }
 
 .product-spec {
-  font-size: 12px;
+  font-size: 11px;
   color: #a6adc8;
   margin-top: 4px;
+  line-height: 1.3;
 }
