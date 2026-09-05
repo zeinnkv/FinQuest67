@@ -28,78 +28,91 @@
   <!-- ОСНОВНОЙ КОНТЕНТ (ДВЕ КОЛОНКИ) -->
   <main class="container main-layout">
 
-    <!-- ЛЕВАЯ КОЛОНКА: ИНТЕРАКТИВНЫЕ ЗАДАНИЯ И СТАТЬИ -->
+    <!-- ЛЕВАЯ КОЛОНКА: ИНТЕРАКТИВНЫЕ БОЛЬШИЕ ЗАДАНИЯ -->
     <section class="column tasks-column">
-      <h2>🎯 Практические задания и Заметки</h2>
-      <p class="section-desc">Изучайте статьи и проходите тренажеры, чтобы зарабатывать монеты!</p>
+      <h2>🎯 Практические задания</h2>
+      <p class="section-desc">Выполняйте квесты и зарабатывайте виртуальные деньги!</p>
 
       <div class="cards-list">
 
-        <!-- Карточка 1: Что такое депозит? -->
+        <!-- Задание 1: Аудит расходов -->
         <div class="card" id="card-task-1">
           <div class="card-header">
-            <span class="badge blue">Статья</span>
-            <span class="reward">+300 ₸</span>
-          </div>
-          <h3 class="card-title">🏦 Что такое депозит?</h3>
-          <p class="card-desc">Прочитай короткую статью о том, как работают банковские вклады и проценты.</p>
-          <button class="btn" id="btn-task-1" onclick="readArticleAndEarn(1, 'https://fingramota.kz/ru/rubric/deposits')">Читать статью и получить +300 ₸</button>
-        </div>
-
-        <!-- Карточка 2: Финансовая подушка -->
-        <div class="card" id="card-task-2">
-          <div class="card-header">
-            <span class="badge green">Статья</span>
-            <span class="reward">+600 ₸</span>
-          </div>
-          <h3 class="card-title">🛡️ Финансовая подушка</h3>
-          <p class="card-desc">Узнай, зачем нужен запас денег «на черный день» и как правильно его накопить.</p>
-          <button class="btn" id="btn-task-2" onclick="readArticleAndEarn(2, 'https://fingramota.kz/ru/news/chto-takoe-finansovaya-podushka-bezopasnosti-i-kak-ee-sformirovat')">Читать статью и получить +600 ₸</button>
-        </div>
-
-        <!-- Карточка 3: Аудит расходов -->
-        <div class="card" id="card-task-3">
-          <div class="card-header">
-            <span class="badge purple">Практика</span>
+            <span class="badge blue">Аналитика</span>
             <span class="reward">+500 ₸</span>
           </div>
           <h3 class="card-title">📊 Аудит карманных расходов</h3>
-          <p class="card-desc">Запиши траты за 3 дня и распредели их по категориям: «Нужно», «Хочу» и «Инвестиции».</p>
-          <button class="btn" id="btn-task-3" onclick="openAuditModal()">Выполнить задание</button>
+          <p class="card-desc">Запишите свои траты за последние 3 дня и распределите их по 3 категориям: «Нужно», «Хочу» и «Инвестиции».</p>
+          <button class="btn" id="btn-task-1" onclick="openAuditModal()">Выполнить задание</button>
+        </div>
+
+        <!-- Задание 2: Инспектор супермаркета -->
+        <div class="card" id="card-task-2">
+          <div class="card-header">
+            <span class="badge purple">Сравнение</span>
+            <span class="reward">+700 ₸</span>
+          </div>
+          <h3 class="card-title">🛒 Инспекция супермаркета</h3>
+          <p class="card-desc">Сравните два товара, рассчитайте стоимость за 1 л/кг и выберите выгодный вариант. (Попыток: <span id="attempts-left">2</span>/2)</p>
+          <button class="btn" id="btn-task-2" onclick="openMarketModal()">Выполнить задание</button>
+        </div>
+
+        <!-- Задание 3: Охота за подписками -->
+        <div class="card" id="card-task-3">
+          <div class="card-header">
+            <span class="badge blue">Аналитика</span>
+            <span class="reward">+600 ₸</span>
+          </div>
+          <h3 class="card-title">🎧 Охота за подписками</h3>
+          <p class="card-desc">Посчитайте траты на популярные сервисы и найдите способ сэкономить на семейном тарифе.</p>
+          <button class="btn" id="btn-task-3" onclick="openSubscriptionModal()">Выполнить задание</button>
         </div>
 
       </div>
     </section>
 
-    <!-- ПРАВАЯ КОЛОНКА: ИНФОРМАЦИОННАЯ БАЗА ЗНАНИЙ -->
+    <!-- ПРАВАЯ КОЛОНКА: БАЗА ЗНАНИЙ (СТАТЬИ ПРО ДЕПОЗИТ И ПОДУШКУ) -->
     <section class="column info-column">
-      <h2>📚 База знаний и Лайфхаки</h2>
-      <p class="section-desc">Полезная теория для успешного прохождения квестов.</p>
+      <h2>📚 База знаний</h2>
+      <p class="section-desc">Читайте достоверные статьи и прокачивайте финансовую грамотность.</p>
 
-      <div class="info-card">
-        <h3>💡 Правило 50/30/20</h3>
-        <p>Разделяй свои доходы так: <strong>50%</strong> — на базовые потребности (еда, транспорт), <strong>30%</strong> — на развлечения и желания, и <strong>20%</strong> — откладывай в копилку.</p>
+      <!-- Статья 1: Депозиты -->
+      <div class="info-card" id="info-card-1">
+        <div class="info-header">
+          <h3>🏦 Что такое депозит и как работают вклады?</h3>
+          <span class="reward">+300 ₸</span>
+        </div>
+        <p>Узнайте, как деньги в банке приносят пассивный доход за счет сложных процентов и почему депозит защищен государством.</p>
+        <button class="btn btn-secondary" id="btn-info-1" onclick="readArticleAndEarn(1, 'https://fingramota.kz/ru/rubric/deposits')">Читать статью (+300 ₸)</button>
       </div>
 
-      <div class="info-card">
-        <h3>🔍 Уловка «Маркетинговая упаковка»</h3>
-        <p>Производители часто продают пачку сока объемом 850 мл по цене 1 литра. Всегда считай <u>стоимость за 1 килограмм или 1 литр</u>, чтобы не переплачивать!</p>
+      <!-- Статья 2: Подушка безопасности -->
+      <div class="info-card" id="info-card-2">
+        <div class="info-header">
+          <h3>🛡️ Финансовая подушка безопасности</h3>
+          <span class="reward">+400 ₸</span>
+        </div>
+        <p>Зачем нужен запас денег на «черный день», сколько месячных расходов он должен закрывать и где его правильно хранить.</p>
+        <button class="btn btn-secondary" id="btn-info-2" onclick="readArticleAndEarn(2, 'https://fingramota.kz/ru/news/chto-takoe-finansovaya-podushka-bezopasnosti-i-kak-ee-sformirovat')">Читать статью (+400 ₸)</button>
       </div>
 
-      <div class="info-card">
-        <h3>⚡ Скрытые автосписания</h3>
-        <p>Подписки на музыкальные и видеосервисы незаметно забирают до 20 000 ₸ в год. Обладатели семейных тарифов экономят до 60% от стоимости одиночных подписок.</p>
+      <div class="info-card hint">
+        <h3>💡 Быстрый лайфхак: Правило 50/30/20</h3>
+        <p>Делите доходы: <strong>50%</strong> — на обязательные нужды, <strong>30%</strong> — на желания и развлечения, <strong>20%</strong> — откладывайте в сбережения.</p>
       </div>
+
     </section>
 
   </main>
 
-  <!-- МОДАЛЬНОЕ ОКНО ДЛЯ ПРАКТИЧЕСКОГО ЗАДАНИЯ (АУДИТ) -->
-  <div class="modal-overlay" id="modal-audit">
+  <!-- ==================== МОДАЛЬНЫЕ ОКНА (POPUPS) ==================== -->
+
+  <!-- МОДАЛКА 1: АУДИТ РАСХОДОВ -->
+  <div class="modal-overlay" id="modal-audit" onclick="closeOnOverlay(event, 'modal-audit')">
     <div class="modal-window">
       <button class="close-btn" onclick="closeModal('modal-audit')">&times;</button>
       <h2>📊 Аудит карманных расходов</h2>
-      <p class="modal-subtitle">Заполните 3 последние покупки и укажите категорию:</p>
+      <p class="modal-subtitle">Заполните 3 последние покупки и распределите по категориям:</p>
 
       <form id="audit-form" onsubmit="submitAudit(event)">
         <div class="audit-row">
@@ -133,8 +146,44 @@
           </select>
         </div>
 
-        <button type="submit" class="btn btn-full">Сохранить аудит (+500 ₸)</button>
+        <button type="submit" class="btn btn-full">Сохранить и получить +500 ₸</button>
       </form>
+    </div>
+  </div>
+
+  <!-- МОДАЛКА 2: ИНСПЕКТОР СУПЕРМАРКЕТА -->
+  <div class="modal-overlay" id="modal-market" onclick="closeOnOverlay(event, 'modal-market')">
+    <div class="modal-window wide">
+      <button class="close-btn" onclick="closeModal('modal-market')">&times;</button>
+      <h2>🛒 Инспекция супермаркета</h2>
+      <p class="modal-subtitle">Сравните два товара по категориям и выберите наиболее выгодный:</p>
+
+      <div class="products-compare" id="products-container"></div>
+
+      <div id="market-feedback" class="feedback-msg"></div>
+
+      <button class="btn btn-full" id="market-submit-btn" onclick="submitMarketChoice()">Проверить выбор (+700 ₸)</button>
+      <button class="btn btn-full secondary hidden" id="market-retry-btn" onclick="retryMarketTask()">Попробовать ещё раз 🔄</button>
+    </div>
+  </div>
+
+  <!-- МОДАЛКА 3: ОХОТА ЗА ПОДПИСКАМИ -->
+  <div class="modal-overlay" id="modal-subscription" onclick="closeOnOverlay(event, 'modal-subscription')">
+    <div class="modal-window">
+      <button class="close-btn" onclick="closeModal('modal-subscription')">&times;</button>
+      <h2>🎧 Охота за подписками</h2>
+      
+      <div class="condition-box">
+        <p id="sub-condition-text">Загрузка...</p>
+      </div>
+
+      <p class="question-text" id="sub-question-text">Загрузка...</p>
+
+      <div class="options-group" id="sub-options-container"></div>
+
+      <div id="sub-feedback" class="feedback-msg"></div>
+
+      <button class="btn btn-full" onclick="submitSubscriptionAnswer()">Отправить ответ (+600 ₸)</button>
     </div>
   </div>
 
