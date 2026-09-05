@@ -3,694 +3,276 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Финансовый тренажер для молодежи</title>
-  <style>
-    :root {
-      --primary: #4f46e5;
-      --primary-hover: #4338ca;
-      --success: #10b981;
-      --bg-gradient: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
-      --card-bg: #ffffff;
-      --text-main: #1f2937;
-      --text-muted: #6b7280;
-      --border-color: #e5e7eb;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background: var(--bg-gradient); color: var(--text-main); min-height: 100vh; padding: 20px; }
-
-    .container { max-width: 1000px; margin: 0 auto; }
-    
-    /* Шапка */
-    header {
-      background: var(--card-bg);
-      padding: 20px 30px;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-    .user-info h1 { font-size: 24px; color: var(--primary); margin-bottom: 5px; }
-    .status-badge { display: inline-block; padding: 4px 12px; background: #e0e7ff; color: var(--primary); border-radius: 20px; font-size: 14px; font-weight: 600; }
-    
-    .header-right { display: flex; align-items: center; gap: 20px; }
-    .balance-box { font-size: 18px; font-weight: 700; background: #ecfdf5; color: var(--success); padding: 8px 16px; border-radius: 12px; }
-    
-    select.lang-select { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); font-weight: 600; cursor: pointer; outline: none; background: #fff; }
-
-    /* Основная сетка */
-    .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
-    @media(max-width: 768px) { .main-grid { grid-template-columns: 1fr; } }
-
-    .section-card {
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 25px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-      margin-bottom: 25px;
-    }
-    .section-card h2 { font-size: 20px; margin-bottom: 8px; color: var(--text-main); }
-    .section-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
-
-    /* Задания и статьи */
-    .task-item, .info-item {
-      background: #f9fafb;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 18px;
-      margin-bottom: 15px;
-      transition: all 0.2s ease;
-    }
-    .task-item:hover, .info-item:hover { border-color: var(--primary); transform: translateY(-2px); }
-    .task-title, .info-title { font-weight: 700; font-size: 16px; margin-bottom: 6px; }
-    .task-desc, .info-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 15px; line-height: 1.4; }
-    
-    .task-item.completed { background: #f0fdf4; border-color: #bbf7d0; }
-
-    button.action-btn {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-      width: 100%;
-    }
-    button.action-btn:hover { background: var(--primary-hover); }
-    button.action-btn:disabled { background: #9ca3af; cursor: not-allowed; }
-
-    /* Вишлист */
-    .wishlist-form input, .wishlist-form button {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      font-size: 14px;
-    }
-    .wishlist-form button { background: var(--success); color: white; border: none; font-weight: 600; cursor: pointer; }
-    .wishlist-form button:hover { background: #059669; }
-
-    .progress-bar-container { background: var(--border-color); border-radius: 8px; height: 16px; overflow: hidden; margin: 15px 0; position: relative; }
-    .progress-bar-fill { background: var(--success); height: 100%; width: 0%; transition: width 0.4s ease; }
-    .progress-text { text-align: center; font-size: 12px; font-weight: 700; margin-top: 5px; }
-
-    .hidden { display: none !important; }
-
-    /* Модальные окна */
-    .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center;
-      opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 1000;
-    }
-    .modal-overlay.active { opacity: 1; pointer-events: auto; }
-    .modal-content {
-      background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 500px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2); transform: scale(0.9); transition: transform 0.3s ease;
-      max-height: 90vh; overflow-y: auto;
-    }
-    .modal-overlay.active .modal-content { transform: scale(1); }
-    .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 15px; }
-
-    /* Карточки супермаркета */
-    .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-    .product-card {
-      border: 2px solid var(--border-color); border-radius: 12px; padding: 15px; cursor: pointer; transition: all 0.2s;
-      background: #f9fafb;
-    }
-    .product-card:hover { border-color: var(--primary); }
-    .product-card.selected { border-color: var(--primary); background: #e0e7ff; }
-    .product-card h4 { font-size: 15px; margin-bottom: 8px; color: var(--primary); }
-    .product-card p { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
-  </style>
+  <title>FinQuest — Финансовая грамотность</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="container">
-    <!-- Шапка -->
-    <header>
-      <div class="user-info">
-        <h1 id="user-name">Юный Инвестор</h1>
-        <span class="status-badge" id="user-status">Новичок в финансах 🌱</span>
+  <!-- ШАПКА САЙТА С ПЕРЕКЛЮЧАТЕЛЕМ ЯЗЫКА -->
+  <header class="header">
+    <div class="container header-content">
+      <div class="user-profile">
+        <div class="avatar">🚀</div>
+        <div>
+          <h2 id="user-name">Юный Инвестор</h2>
+          <span class="status-badge" id="user-status">Новичок в финансах</span>
+        </div>
       </div>
-      <div class="header-right">
-        <div class="balance-box"><span class="balance-label">Баланс:</span> <span id="balance-amount">0 ₸</span></div>
-        <select class="lang-select" id="lang-selector" onchange="changeLanguage(this.value)">
+
+      <!-- Блок баланса и переключения языка -->
+      <div style="display: flex; gap: 12px; align-items: center;">
+        <select id="lang-selector" onchange="changeLanguage(this.value)" style="background: #313244; color: #cdd6f4; border: 1px solid #45475a; padding: 6px 10px; border-radius: 8px; font-weight: 600; cursor: pointer;">
           <option value="ru">🇷🇺 RU</option>
           <option value="kk">🇰🇿 KK</option>
           <option value="en">🇬🇧 EN</option>
         </select>
-      </div>
-    </header>
 
-    <div class="main-grid">
-      <!-- Левая колонка: Задания -->
-      <div class="tasks-column">
-        <div class="section-card">
-          <h2 id="tasks-title">🎯 Практические задания</h2>
-          <p class="section-desc" id="tasks-desc">Выполняйте квесты и зарабатывайте виртуальные деньги!</p>
-
-          <div class="task-item" id="card-task-1">
-            <div class="task-title" id="t1-title">📊 Аудит карманных расходов</div>
-            <div class="task-desc" id="t1-desc">Запишите свои траты за последние 3 дня и распределите их по 3 категориям.</div>
-            <button class="action-btn" id="btn-task-1" onclick="openAuditModal()">Выполнить</button>
-          </div>
-
-          <div class="task-item" id="card-task-2">
-            <div class="task-title" id="t2-title">🛒 Инспекция супермаркета</div>
-            <div class="task-desc" id="t2-desc">Сравните два товара по цене за единицу, составу и качеству.</div>
-            <button class="action-btn" id="btn-task-2" onclick="openMarketModal()">Выполнить</button>
-          </div>
-
-          <div class="task-item" id="card-task-3">
-            <div class="task-title" id="t3-title">🎧 Охота за подписками</div>
-            <div class="task-desc" id="t3-desc">Найдите выгодный семейный тариф среди разных сервисов.</div>
-            <button class="action-btn" id="btn-task-3" onclick="openSubscriptionModal()">Выполнить</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Правая колонка: База знаний и Вишлист -->
-      <div class="info-column">
-        <div class="section-card" id="wishlist-block">
-          <h3 id="wish-title">🎯 Моя главная цель (Вишлист)</h3>
-          <p class="section-desc" id="wish-desc">Впишите желаемый предмет. Система оценит его реальную стоимость:</p>
-          
-          <form class="wishlist-form" id="wishlist-form" onsubmit="setWishlistGoal(event)">
-            <input type="text" id="wish-title-input" placeholder="Название (напр. Наушники, Кроссовки)" required>
-            <button type="submit" id="wish-btn">Загадать мечту 🚀</button>
-          </form>
-
-          <div id="wishlist-progress-box" class="hidden">
-            <h4 id="wish-display-title" style="margin-bottom: 5px; color: var(--primary);"></h4>
-            <p style="font-size: 14px; font-weight: 600;" id="wish-display-price"></p>
-            <div class="progress-bar-container">
-              <div class="progress-bar-fill" id="wish-progress-fill"></div>
-            </div>
-            <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted);">
-              <span id="wish-percent-text">0%</span>
-              <span id="wish-remains-text">Осталось: 0 ₸</span>
-            </div>
-
-            <div style="margin-top: 15px; display: flex; gap: 10px;">
-              <input type="number" id="wish-deposit-input" placeholder="Сумма (₸)" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid var(--border-color);">
-              <button onclick="depositToWishlist()" id="deposit-btn" style="background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: 600;">Отложить</button>
-            </div>
-            <button onclick="resetWishlistGoal()" id="reset-wish-btn" style="background: transparent; color: #ef4444; border: none; font-size: 12px; cursor: pointer; margin-top: 10px; width: 100%; text-align: center;">Сбросить цель 🔄</button>
-          </div>
-        </div>
-
-        <div class="section-card">
-          <h2 id="knowledge-title">📚 База знаний</h2>
-          <p class="section-desc" id="knowledge-desc">Читайте статьи и получайте бонусные тенге.</p>
-          
-          <div class="info-item">
-            <div class="info-title" id="art1-title">Как копить деньги с малых лет?</div>
-            <div class="info-desc" id="art1-desc">Простые правила финансовой дисциплины для подростков.</div>
-            <button class="action-btn" id="btn-info-1" onclick="readArticleAndEarn(1, 'https://wikipedia.org')">Читать (+300 ₸)</button>
-          </div>
+        <div class="balance-card">
+          <span class="balance-label">Ваш баланс:</span>
+          <span class="balance-amount" id="balance-amount">0 ₸</span>
         </div>
       </div>
     </div>
-  </div>
+  </header>
 
-  <!-- Модальное окно: Аудит расходов -->
-  <div class="modal-overlay" id="modal-audit" onclick="closeOnOverlay(event, 'modal-audit')">
-    <div class="modal-content">
-      <div class="modal-title" id="audit-modal-title">📊 Аудит карманных расходов</div>
-      <form onsubmit="submitAudit(event)">
-        <p style="font-size: 14px; margin-bottom: 15px;" id="audit-modal-text">Распределите три недавние траты на категории: «Нужно», «Хочу», «Инвестиции».</p>
-        <input type="text" placeholder="Пример: Кофе (Хочу)" style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid var(--border-color);" required>
-        <input type="text" placeholder="Пример: Проезд в школу (Нужно)" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid var(--border-color);" required>
-        <button type="submit" class="action-btn" id="audit-submit-btn">Завершить аудит (+500 ₸)</button>
+  <!-- ОСНОВНОЙ КОНТЕНТ (ДВЕ КОЛОНКИ) -->
+  <main class="container main-layout">
+
+    <!-- ЛЕВАЯ КОЛОНКА: ИНТЕРАКТИВНЫЕ БОЛЬШИЕ ЗАДАНИЯ -->
+    <section class="column tasks-column">
+      <h2>🎯 Практические задания</h2>
+      <p class="section-desc">Выполняйте квесты и зарабатывайте виртуальные деньги!</p>
+
+      <div class="cards-list">
+
+        <!-- Задание 1: Аудит расходов -->
+        <div class="card" id="card-task-1">
+          <div class="card-header">
+            <span class="badge blue">Аналитика</span>
+            <span class="reward">+500 ₸</span>
+          </div>
+          <h3 class="card-title">📊 Аудит карманных расходов</h3>
+          <p class="card-desc">Запишите свои траты за последние 3 дня и распределите их по 3 категориям: «Нужно», «Хочу» и «Инвестиции».</p>
+          <button class="btn" id="btn-task-1" onclick="openAuditModal()">Выполнить задание</button>
+        </div>
+
+        <!-- Задание 2: Инспектор супермаркета -->
+        <div class="card" id="card-task-2">
+          <div class="card-header">
+            <span class="badge purple">Сравнение</span>
+            <span class="reward">+700 ₸</span>
+          </div>
+          <h3 class="card-title">🛒 Инспекция супермаркета</h3>
+          <p class="card-desc">Сравните два товара, рассчитайте стоимость за 1 л/кг и выберите выгодный вариант. (Попыток: <span id="attempts-left">2</span>/2)</p>
+          <button class="btn" id="btn-task-2" onclick="openMarketModal()">Выполнить задание</button>
+        </div>
+
+        <!-- Задание 3: Охота за подписками -->
+        <div class="card" id="card-task-3">
+          <div class="card-header">
+            <span class="badge blue">Аналитика</span>
+            <span class="reward">+600 ₸</span>
+          </div>
+          <h3 class="card-title">🎧 Охота за подписками</h3>
+          <p class="card-desc">Посчитайте траты на популярные сервисы и найдите способ сэкономить на семейном тарифе.</p>
+          <button class="btn" id="btn-task-3" onclick="openSubscriptionModal()">Выполнить задание</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ПРАВАЯ КОЛОНКА: БАЗА ЗНАНИЙ И ВИШЛИСТ -->
+    <section class="column info-column">
+      <h2>📚 База знаний & Цели</h2>
+      <p class="section-desc">Читайте достоверные статьи и копите на мечту.</p>
+
+      <!-- БЛОК ВИШЛИСТА (МЕЧТА) -->
+      <div class="info-card wishlist-card" id="wishlist-block">
+        <div class="info-header">
+          <h3>🎯 Моя главная цель (Вишлист)</h3>
+          <span class="badge blue">Накопления</span>
+        </div>
+        
+        <p>Впишите желаемый предмет. Система сама оценит его стоимость (от 10 000 ₸ и выше):</p>
+
+        <!-- Форма ввода названия -->
+        <form id="wishlist-form" onsubmit="setWishlistGoal(event)">
+          <input type="text" id="wish-title-input" placeholder="Название (напр. Наушники)" required>
+          <button type="submit" class="btn btn-full" style="margin-top: 10px;">Загадать мечту 🚀</button>
+        </form>
+
+        <!-- Блок прогресса и пополнения -->
+        <div id="wishlist-progress-box" class="hidden">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <strong id="wish-display-title" style="color: #fab387;"></strong>
+            <span id="wish-display-price" style="font-weight: 700; color: #a6e3a1;"></span>
+          </div>
+          
+          <!-- Шкала прогресса -->
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="wish-progress-fill"></div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-top: 6px; color: #a6adc8;">
+            <span id="wish-percent-text">0% накоплено</span>
+            <span id="wish-remains-text">Осталось: 0 ₸</span>
+          </div>
+
+          <p style="font-size: 0.85rem; margin-top: 12px; margin-bottom: 6px; color: #cdd6f4;">Сколько отложить из баланса?</p>
+          <div style="display: flex; gap: 8px;">
+            <input type="number" id="wish-deposit-input" placeholder="Сумма (₸)" min="1" style="flex: 1; padding: 6px 10px; border-radius: 6px; border: 1px solid #45475a; background: #313244; color: #cdd6f4;">
+            <button class="btn" onclick="depositToWishlist()" style="padding: 6px 12px; font-size: 0.85rem;">Отложить</button>
+          </div>
+
+          <button class="btn btn-secondary" onclick="resetWishlistGoal()" style="margin-top: 10px; font-size: 0.8rem; padding: 6px; width: 100%;">Сбросить цель 🔄</button>
+        </div>
+      </div>
+
+      <!-- Статья 1: Депозиты -->
+      <div class="info-card" id="info-card-1">
+        <div class="info-header">
+          <h3>🏦 Что такое депозит и как работают вклады?</h3>
+          <span class="reward">+300 ₸</span>
+        </div>
+        <p>Узнайте, как деньги в банке приносят пассивный доход за счет сложных процентов и почему депозит защищен государством.</p>
+        <button class="btn btn-secondary" id="btn-info-1" onclick="readArticleAndEarn(1, 'https://fingramota.kz/ru/rubric/deposits')">Читать статью (+300 ₸)</button>
+      </div>
+
+      <!-- Статья 2: Подушка безопасности -->
+      <div class="info-card" id="info-card-2">
+        <div class="info-header">
+          <h3>🛡️ Финансовая подушка безопасности</h3>
+          <span class="reward">+400 ₸</span>
+        </div>
+        <p>Зачем нужен запас денег на «черный день», сколько месячных расходов он должен закрывать и где его правильно хранить.</p>
+        <button class="btn btn-secondary" id="btn-info-2" onclick="readArticleAndEarn(2, 'https://fingramota.kz/ru/news/chto-takoe-finansovaya-podushka-bezopasnosti-i-kak-ee-sformirovat')">Читать статью (+400 ₸)</button>
+      </div>
+
+      <!-- Лайфхак -->
+      <div class="info-card hint">
+        <h3>💡 Быстрый лайфхак: Правило 50/30/20</h3>
+        <p>Делите доходы: <strong>50%</strong> — на обязательные нужды, <strong>30%</strong> — на желания и развлечения, <strong>20%</strong> — откладывайте в сбережения.</p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ==================== МОДАЛЬНЫЕ ОКНА ==================== -->
+
+  <!-- МОДАЛКА 0: РЕГИСТРАЦИЯ ПРИ ПЕРВОМ ВХОДЕ -->
+  <div class="modal-overlay" id="modal-welcome">
+    <div class="modal-window">
+      <h2>👋 Добро пожаловать в FinQuest!</h2>
+      <p class="modal-subtitle">Давайте познакомимся перед началом игры:</p>
+
+      <form id="welcome-form" onsubmit="submitRegistration(event)">
+        <div class="form-group">
+          <label for="reg-name">Ваше имя:</label>
+          <input type="text" id="reg-name" placeholder="Например: Арман" required>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-age">Возраст:</label>
+          <input type="number" id="reg-age" placeholder="Например: 15" min="7" max="99" required>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-lang">Выберите язык / Тілді таңдаңыз:</label>
+          <select id="reg-lang" required>
+            <option value="ru">Русский 🇷🇺</option>
+            <option value="kk">Қазақша 🇰🇿</option>
+            <option value="en">English 🇬🇧</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-full">Начать путешествие 🚀</button>
       </form>
     </div>
   </div>
 
-  <!-- Модальное окно: Супермаркет -->
+  <!-- МОДАЛКА 1: АУДИТ РАСХОДОВ -->
+  <div class="modal-overlay" id="modal-audit" onclick="closeOnOverlay(event, 'modal-audit')">
+    <div class="modal-window">
+      <button class="close-btn" onclick="closeModal('modal-audit')">&times;</button>
+      <h2>📊 Аудит карманных расходов</h2>
+      <p class="modal-subtitle">Заполните 3 последние покупки и распределите по категориям:</p>
+
+      <form id="audit-form" onsubmit="submitAudit(event)">
+        <div class="audit-row">
+          <input type="text" placeholder="Товар (напр. Снеки)" required>
+          <input type="number" placeholder="Сумма (₸)" required>
+          <select required>
+            <option value="">Категория...</option>
+            <option value="need">Нужно</option>
+            <option value="want">Хочу</option>
+            <option value="invest">Инвестиция</option>
+          </select>
+        </div>
+        <div class="audit-row">
+          <input type="text" placeholder="Товар (напр. Проезд)" required>
+          <input type="number" placeholder="Сумма (₸)" required>
+          <select required>
+            <option value="">Категория...</option>
+            <option value="need">Нужно</option>
+            <option value="want">Хочу</option>
+            <option value="invest">Инвестиция</option>
+          </select>
+        </div>
+        <div class="audit-row">
+          <input type="text" placeholder="Товар (напр. Книга)" required>
+          <input type="number" placeholder="Сумма (₸)" required>
+          <select required>
+            <option value="">Категория...</option>
+            <option value="need">Нужно</option>
+            <option value="want">Хочу</option>
+            <option value="invest">Инвестиция</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-full">Сохранить и получить +500 ₸</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- МОДАЛКА 2: ИНСПЕКТОР СУПЕРМАРКЕТА -->
   <div class="modal-overlay" id="modal-market" onclick="closeOnOverlay(event, 'modal-market')">
-    <div class="modal-content" style="max-width: 600px;">
-      <div class="modal-title" id="market-modal-title">🛒 Инспекция супермаркета</div>
-      <p style="font-size: 14px; margin-bottom: 15px;" id="market-modal-desc">Изучите характеристики продуктов, рассчитайте стоимость за единицу (литр/килограмм) и выберите наиболее выгодный и качественный вариант:</p>
-      
-      <div class="product-grid" id="products-container"></div>
-      <div id="market-feedback" style="font-size: 13px; margin-bottom: 15px; line-height: 1.4; color: #b91c1c;"></div>
-      
-      <button class="action-btn" id="market-submit-btn" onclick="submitMarketChoice()">Выбрать товар</button>
+    <div class="modal-window wide">
+      <button class="close-btn" onclick="closeModal('modal-market')">&times;</button>
+      <h2>🛒 Инспекция супермаркета</h2>
+      <p class="modal-subtitle">Сравните два товара по категориям и выберите наиболее выгодный:</p>
+
+      <div class="products-compare" id="products-container"></div>
+
+      <div id="market-feedback" class="feedback-msg"></div>
+
+      <button class="btn btn-full" id="market-submit-btn" onclick="submitMarketChoice()">Проверить выбор (+700 ₸)</button>
+      <button class="btn btn-full secondary hidden" id="market-retry-btn" onclick="retryMarketTask()">Попробовать ещё раз 🔄</button>
     </div>
   </div>
 
-  <!-- Модальное окно: Подписки -->
+  <!-- МОДАЛКА 3: ОХОТА ЗА ПОДПИСКАМИ -->
   <div class="modal-overlay" id="modal-subscription" onclick="closeOnOverlay(event, 'modal-subscription')">
-    <div class="modal-content">
-      <div class="modal-title" id="sub-modal-title">🎧 Охота за подписками</div>
-      <p id="sub-condition-text" style="font-size: 14px; margin-bottom: 10px; font-weight: 600;"></p>
-      <p id="sub-question-text" style="font-size: 13px; margin-bottom: 15px; color: var(--text-muted);"></p>
+    <div class="modal-window">
+      <button class="close-btn" onclick="closeModal('modal-subscription')">&times;</button>
+      <h2>🎧 Охота за подписками</h2>
       
-      <div id="sub-options-container" style="margin-bottom: 20px;"></div>
-      <button class="action-btn" id="sub-submit-btn" onclick="submitSubscriptionAnswer()">Проверить ответ</button>
+      <div class="condition-box">
+        <p id="sub-condition-text">Загрузка...</p>
+      </div>
+
+      <p class="question-text" id="sub-question-text">Загрузка...</p>
+
+      <div class="options-group" id="sub-options-container"></div>
+
+      <div id="sub-feedback" class="feedback-msg"></div>
+
+      <button class="btn btn-full" onclick="submitSubscriptionAnswer()">Отправить ответ (+600 ₸)</button>
     </div>
   </div>
 
-  <script>
-    // Словарь переводов (i18n)
-    const translations = {
-      ru: {
-        newUser: "Юный Инвестор",
-        status1: "Новичок в финансах 🌱",
-        status2: "Продвинутый 📈",
-        status3: "Финансовый Гуру 🧠",
-        balanceLabel: "Баланс:",
-        tasksTitle: "🎯 Практические задания",
-        tasksDesc: "Выполняйте квесты и зарабатывайте виртуальные деньги!",
-        t1Title: "📊 Аудит карманных расходов",
-        t1Desc: "Запишите свои траты за последние 3 дня и распределите их по категориям.",
-        t2Title: "🛒 Инспекция супермаркета",
-        t2Desc: "Сравните два товара по цене за единицу, составу и качеству.",
-        t3Title: "🎧 Охота за подписками",
-        t3Desc: "Найдите выгодный семейный тариф среди разных сервисов.",
-        wishTitle: "🎯 Моя главная цель (Вишлист)",
-        wishDesc: "Впишите желаемый предмет. Система оценит его реальную стоимость:",
-        wishPlaceholder: "Название (напр. Наушники, Кроссовки)",
-        wishBtn: "Загадать мечту 🚀",
-        wishDone: "Цель полностью достигнута! 🎉",
-        wishLeft: "Осталось: ",
-        depositBtn: "Отложить",
-        resetWishBtn: "Сбросить цель 🔄",
-        knowledgeTitle: "📚 База знаний",
-        knowledgeDesc: "Читайте статьи и получайте бонусные тенге.",
-        art1Title: "Как копить деньги с малых лет?",
-        art1Desc: "Простые правила финансовой дисциплины для подростков.",
-        btnRead: "Читать",
-        btnCompleted: "Выполнено ✓",
-        btnDoTask: "Выполнить",
-        errorNoMoney: "У вас недостаточно средств!",
-        errorInvalidAmount: "Введите корректную сумму!"
-      },
-      kk: {
-        newUser: "Жас Инвестор",
-        status1: "Қаржыдағы бастаушы 🌱",
-        status2: "Тәжірибелі 📈",
-        status3: "Қаржы Гуруы 🧠",
-        balanceLabel: "Баланс:",
-        tasksTitle: "🎯 Практикалық тапсырмалар",
-        tasksDesc: "Квесттерді орындап, виртуалды ақша табыңыз!",
-        t1Title: "📊 Қалта шығындарының аудиті",
-        t1Desc: "Соңғы 3 күндегі шығындарыңызды жазып, санаттарға бөліңіз.",
-        t2Title: "🛒 Супермаркет инспекциясы",
-        t2Desc: "Екі тауарды бірлік бағасы, құрамы және сапасы бойынша салыстырыңыз.",
-        t3Title: "🎧 Жазылымдарға аңшылық",
-        t3Desc: "Сервистер арасынан тиімді отбасылық тарифті табыңыз.",
-        wishTitle: "🎯 Мақсатым (Wishlist)",
-        wishDesc: "Қалаған заттың атын жазыңыз. Жүйе оның бағасын есептейді:",
-        wishPlaceholder: "Атауы (мыс. Құлаққап, Кроссовки)",
-        wishBtn: "Армандау 🚀",
-        wishDone: "Мақсатқа жеттіңіз! 🎉",
-        wishLeft: "Қалды: ",
-        depositBtn: "Салу",
-        resetWishBtn: "Мақсатты нөлдеу 🔄",
-        knowledgeTitle: "📚 Білім базасы",
-        knowledgeDesc: "Мақалаларды оқып, бонустық тенге алыңыз.",
-        art1Title: "Ақшаны жастай қалай жинауға болады?",
-        art1Desc: "Жасөспірімдерге арналған қаржылық тәртіп ережелері.",
-        btnRead: "Оқу",
-        btnCompleted: "Орындалды ✓",
-        btnDoTask: "Орындау",
-        errorNoMoney: "Балансыңызда қаражат жеткіліксіз!",
-        errorInvalidAmount: "Дұрыс соманы енгізіңіз!"
-      },
-      en: {
-        newUser: "Young Investor",
-        status1: "Finance Beginner 🌱",
-        status2: "Advanced 📈",
-        status3: "Finance Guru 🧠",
-        balanceLabel: "Balance:",
-        tasksTitle: "🎯 Practical Quests",
-        tasksDesc: "Complete quests and earn virtual money!",
-        t1Title: "📊 Pocket Expenses Audit",
-        t1Desc: "Track your expenses for the last 3 days into categories.",
-        t2Title: "🛒 Supermarket Inspection",
-        t2Desc: "Compare two items by unit price, ingredients, and quality.",
-        t3Title: "🎧 Subscription Hunt",
-        t3Desc: "Find a profitable family plan among different services.",
-        wishTitle: "🎯 My Main Goal (Wishlist)",
-        wishDesc: "Type your desired item. The system will calculate its price:",
-        wishPlaceholder: "Name (e.g. Headphones, Sneakers)",
-        wishBtn: "Set Goal 🚀",
-        wishDone: "Goal achieved! 🎉",
-        wishLeft: "Remains: ",
-        depositBtn: "Deposit",
-        resetWishBtn: "Reset Goal 🔄",
-        knowledgeTitle: "📚 Knowledge Base",
-        knowledgeDesc: "Read articles and earn bonus tenge.",
-        art1Title: "How to save money from an early age?",
-        art1Desc: "Simple financial discipline rules for teens.",
-        btnRead: "Read",
-        btnCompleted: "Completed ✓",
-        btnDoTask: "Start",
-        errorNoMoney: "Not enough balance!",
-        errorInvalidAmount: "Enter a valid amount!"
-      }
-    };
-
-    // Состояние приложения
-    let userProfile = JSON.parse(localStorage.getItem("fin_user_profile")) || null;
-    let balance = parseInt(localStorage.getItem("fin_balance")) || 0;
-    let completedTasks = JSON.parse(localStorage.getItem("fin_completed_tasks")) || [];
-    let readArticles = JSON.parse(localStorage.getItem("fin_read_articles")) || [];
-    let wishlist = JSON.parse(localStorage.getItem("fin_wishlist")) || null;
-
-    // Пул пар продуктов для супермаркета (с полным описанием для детального разбора ошибок)
-    let marketPairs = [
-      {
-        id: 1,
-        title: "Категория: Молоко",
-        prod1: { name: "Молоко «Фермерское»", price: 600, volume: 1000, unit: "мл", gmo: "Нет", brand: "Местный фермер", quality: "Высший сорт, натуральное", unitPrice: 0.6 },
-        prod2: { name: "Молоко «Ультра»", price: 540, volume: 800, unit: "мл", gmo: "Нет", brand: "Заводское", quality: "Первый сорт", unitPrice: 0.675 },
-        correctIndex: 0,
-        explanation: "«Фермерское» молоко выгоднее: цена за 1 мл составляет 0.60 ₸, в то время как у «Ультра» цена за 1 мл выше — 0.67 ₸, при этом объем меньше."
-      },
-      {
-        id: 2,
-        title: "Категория: Шоколадное печенье",
-        prod2: { name: "Печенье «Хрумка»", price: 450, volume: 300, unit: "г", gmo: "Следы сои", brand: "Эконом", quality: "Среднее", unitPrice: 1.5 },
-        prod1: { name: "Печенье «SweetHome»", price: 600, volume: 500, unit: "г", gmo: "Нет", brand: "Премиум вкуса", quality: "Высокое, натуральный состав", unitPrice: 1.2 },
-        correctIndex: 1,
-        explanation: "Печенье «SweetHome» выгоднее по цене за грамм (1.2 ₸/г против 1.5 ₸/г), не содержит ГМО/сои и имеет более высокий класс качества."
-      }
-    ];
-    let currentMarketPairIndex = 0;
-    let selectedProductIndex = null;
-    let marketAttempt = 1;
-
-    // Пул из 5 разных подписок для задания №3
-    let subscriptionTasksPool = [
-      {
-        condition: "Музыкальный сервис стоит 1 500 ₸/мес на одного человека. Семейный тариф на 4 человек стоит 2 800 ₸/мес.",
-        question: "Сколько сэкономит КАЖДЫЙ из 4 друзей в месяц при переходе на семейный тариф?",
-        options: ["A) 500 ₸", "B) 800 ₸", "C) 1 300 ₸"],
-        correct: 1
-      },
-      {
-        condition: "Кинотеатр онлайн предлагает подписку за 2 000 ₸/мес индивидуально или семейный аккаунт на 5 человек за 4 500 ₸/мес.",
-        question: "Какова выгода для каждого участника в месяц при семейной подписке?",
-        options: ["A) 1 100 ₸", "B) 900 ₸", "C) 500 ₸"],
-        correct: 0
-      },
-      {
-        condition: "Облачное хранилище стоит 900 ₸/мес за 200 ГБ. Семейный доступ на 3 человек с общим объемом стоит 1 800 ₸/мес.",
-        question: "Сколько сэкономит каждый пользователь, разделив семейный тариф поровну?",
-        options: ["A) 100 ₸", "B) 200 ₸", "C) 300 ₸"],
-        correct: 2
-      },
-      {
-        condition: "Фитнес-приложение стоит 2 400 ₸/мес на одного. Групповой доступ для пары (2 человека) стоит 3 600 ₸/мес.",
-        question: "Сколько сэкономит каждый человек в месяц?",
-        options: ["A) 600 ₸", "B) 1 200 ₸", "C) 300 ₸"],
-        correct: 0
-      },
-      {
-        condition: "Электронная библиотека стоит 1 200 ₸ в месяц. Годовой абонемент сразу на год стоит 10 800 ₸.",
-        question: "Сколько удастся сэкономить за год, если оплатить годовой абонемент вместо ежемесячного?",
-        options: ["A) 2 400 ₸", "B) 3 600 ₸", "C) 1 200 ₸"],
-        correct: 1
-      }
-    ];
-
-    document.addEventListener("DOMContentLoaded", () => {
-      if (!userProfile) {
-        userProfile = { name: "Юный Инвестор", age: 15, lang: "ru" };
-        localStorage.setItem("fin_user_profile", JSON.stringify(userProfile));
-      }
-      const langSelect = document.getElementById("lang-selector");
-      if (langSelect) langSelect.value = userProfile.lang || "ru";
-      updateUI();
-    });
-
-    function changeLanguage(lang) {
-      userProfile.lang = lang;
-      localStorage.setItem("fin_user_profile", JSON.stringify(userProfile));
-      updateUI();
-    }
-
-    function updateUI() {
-      const lang = userProfile ? userProfile.lang : "ru";
-      const t = translations[lang] || translations.ru;
-
-      document.getElementById("user-name").textContent = userProfile.name;
-      
-      const statusEl = document.getElementById("user-status");
-      if (balance >= 1500) statusEl.textContent = t.status3;
-      else if (balance >= 700) statusEl.textContent = t.status2;
-      else statusEl.textContent = t.status1;
-
-      document.getElementById("balance-amount").textContent = `${balance} ₸`;
-
-      // Статические тексты интерфейса
-      document.querySelector(".balance-label").textContent = t.balanceLabel;
-      document.getElementById("tasks-title").textContent = t.tasksTitle;
-      document.getElementById("tasks-desc").textContent = t.tasksDesc;
-      
-      document.getElementById("t1-title").textContent = t.t1Title;
-      document.getElementById("t1-desc").textContent = t.t1Desc;
-      document.getElementById("t2-title").textContent = t.t2Title;
-      document.getElementById("t2-desc").textContent = t.t2Desc;
-      document.getElementById("t3-title").textContent = t.t3Title;
-      document.getElementById("t3-desc").textContent = t.t3Desc;
-
-      document.getElementById("wish-title").textContent = t.wishTitle;
-      document.getElementById("wish-desc").textContent = t.wishDesc;
-      document.getElementById("wish-title-input").placeholder = t.wishPlaceholder;
-      document.getElementById("wish-btn").textContent = t.wishBtn;
-      document.getElementById("deposit-btn").textContent = t.depositBtn;
-      document.getElementById("reset-wish-btn").textContent = t.resetWishBtn;
-
-      document.getElementById("knowledge-title").textContent = t.knowledgeTitle;
-      document.getElementById("knowledge-desc").textContent = t.knowledgeDesc;
-      document.getElementById("art1-title").textContent = t.art1Title;
-      document.getElementById("art1-desc").textContent = t.art1Desc;
-
-      // Кнопки заданий
-      for (let i = 1; i <= 3; i++) {
-        const btn = document.getElementById(`btn-task-${i}`);
-        const card = document.getElementById(`card-task-${i}`);
-        if (completedTasks.includes(i)) {
-          btn.disabled = true;
-          btn.textContent = t.btnCompleted;
-          card.classList.add("completed");
-        } else {
-          btn.disabled = false;
-          btn.textContent = t.btnDoTask;
-        }
-      }
-
-      updateWishlistUI();
-    }
-
-    function saveState() {
-      localStorage.setItem("fin_balance", balance);
-      localStorage.setItem("fin_completed_tasks", JSON.stringify(completedTasks));
-      localStorage.setItem("fin_read_articles", JSON.stringify(readArticles));
-      localStorage.setItem("fin_wishlist", JSON.stringify(wishlist));
-    }
-
-    function openModal(id) { document.getElementById(id).classList.add("active"); }
-    function closeModal(id) { document.getElementById(id).classList.remove("active"); }
-    function closeOnOverlay(e, id) { if (e.target.classList.contains("modal-overlay")) closeModal(id); }
-
-    // Вишлист
-    function calculateSmartPrice(title) {
-      const lower = title.toLowerCase();
-      let base = 15000;
-      if (lower.includes("телефон") || lower.includes("ноутбук") || lower.includes("айфон")) base = 45000;
-      else if (lower.includes("наушники") || lower.includes("кроссовки")) base = 20000;
-      return base + Math.floor(Math.random() * 20000);
-    }
-
-    function setWishlistGoal(e) {
-      e.preventDefault();
-      const title = document.getElementById("wish-title-input").value.trim();
-      if (!title) return;
-      wishlist = { title, price: calculateSmartPrice(title), saved: 0 };
-      saveState();
-      updateUI();
-      document.getElementById("wish-title-input").value = "";
-    }
-
-    function resetWishlistGoal() {
-      wishlist = null;
-      localStorage.removeItem("fin_wishlist");
-      updateUI();
-    }
-
-    function depositToWishlist() {
-      if (!wishlist) return;
-      const amount = parseInt(document.getElementById("wish-deposit-input").value);
-      const t = translations[userProfile.lang];
-      if (isNaN(amount) || amount <= 0) { alert(t.errorInvalidAmount); return; }
-      if (amount > balance) { alert(t.errorNoMoney); return; }
-
-      balance -= amount;
-      wishlist.saved = Math.min(wishlist.price, wishlist.saved + amount);
-      document.getElementById("wish-deposit-input").value = "";
-      saveState();
-      updateUI();
-    }
-
-    function updateWishlistUI() {
-      const t = translations[userProfile.lang];
-      const form = document.getElementById("wishlist-form");
-      const box = document.getElementById("wishlist-progress-box");
-      if (!wishlist) {
-        form.classList.remove("hidden");
-        box.classList.add("hidden");
-        return;
-      }
-      form.classList.add("hidden");
-      box.classList.remove("hidden");
-
-      let percent = Math.min(100, Math.round((wishlist.saved / wishlist.price) * 100));
-      let remains = Math.max(0, wishlist.price - wishlist.saved);
-
-      document.getElementById("wish-display-title").textContent = wishlist.title;
-      document.getElementById("wish-display-price").textContent = `${wishlist.saved} / ${wishlist.price} ₸`;
-      document.getElementById("wish-progress-fill").style.width = `${percent}%`;
-      document.getElementById("wish-percent-text").textContent = `${percent}%`;
-      document.getElementById("wish-remains-text").textContent = wishlist.saved >= wishlist.price ? t.wishDone : `${t.wishLeft}${remains} ₸`;
-    }
-
-    // Задание 1: Аудит
-    function openAuditModal() { if (!completedTasks.includes(1)) openModal("modal-audit"); }
-    function submitAudit(e) {
-      e.preventDefault();
-      if (completedTasks.includes(1)) return;
-      balance += 500;
-      completedTasks.push(1);
-      saveState();
-      updateUI();
-      closeModal("modal-audit");
-    }
-
-    // Задание 2: Супермаркет (с полным описанием и разбором ошибок)
-    function openMarketModal() {
-      if (!completedTasks.includes(2)) {
-        marketAttempt = 1;
-        currentMarketPairIndex = 0;
-        loadMarketPair();
-        document.getElementById("market-feedback").textContent = "";
-        openModal("modal-market");
-      }
-    }
-
-    function loadMarketPair() {
-      selectedProductIndex = null;
-      const pair = marketPairs[currentMarketPairIndex];
-      const container = document.getElementById("products-container");
-      container.innerHTML = `
-        <div class="product-card" id="prod-0" onclick="selectProduct(0)">
-          <h4>${pair.prod1.name}</h4>
-          <p>• Цена: ${pair.prod1.price} ₸</p>
-          <p>• Объем/Вес: ${pair.prod1.volume} ${pair.prod1.unit}</p>
-          <p>• Бренд: ${pair.prod1.brand}</p>
-          <p>• Качество: ${pair.prod1.quality}</p>
-          <p>• ГМО: ${pair.prod1.gmo}</p>
-        </div>
-        <div class="product-card" id="prod-1" onclick="selectProduct(1)">
-          <h4>${pair.prod2.name}</h4>
-          <p>• Цена: ${pair.prod2.price} ₸</p>
-          <p>• Объем/Вес: ${pair.prod2.volume} ${pair.prod2.unit}</p>
-          <p>• Бренд: ${pair.prod2.brand}</p>
-          <p>• Качество: ${pair.prod2.quality}</p>
-          <p>• ГМО: ${pair.prod2.gmo}</p>
-        </div>
-      `;
-    }
-
-    function selectProduct(index) {
-      selectedProductIndex = index;
-      document.querySelectorAll(".product-card").forEach(c => c.classList.remove("selected"));
-      document.getElementById(`prod-${index}`).classList.add("selected");
-    }
-
-    function submitMarketChoice() {
-      if (selectedProductIndex === null) return;
-      const pair = marketPairs[currentMarketPairIndex];
-      const feedback = document.getElementById("market-feedback");
-
-      if (selectedProductIndex === pair.correctIndex) {
-        balance += 700;
-        completedTasks.push(2);
-        saveState();
-        updateUI();
-        closeModal("modal-market");
-        alert("Поздравляем! Задание выполнено, вы заработали 700 ₸!");
-      } else {
-        if (marketAttempt === 1) {
-          marketAttempt = 2;
-          feedback.innerHTML = `❌ Ошибка! ${pair.explanation}<br><b>У вас осталась 2-я попытка!</b> Товар изменен на другую категорию.`;
-          currentMarketPairIndex = 1; // переключаемся на печенье
-          setTimeout(() => { loadMarketPair(); }, 2000);
-        } else {
-          feedback.innerHTML = `❌ К сожалению, попытки исчерпаны. Правильный выбор был сделан на основе расчета цены за единицу продукта и состава.`;
-          setTimeout(() => { closeModal("modal-market"); }, 3000);
-        }
-      }
-    }
-
-    // Задание 3: Подписки (5 вариантов)
-    function openSubscriptionModal() {
-      if (!completedTasks.includes(3)) {
-        // Выбираем задачу на основе дня или случайно
-        const randomTask = subscriptionTasksPool[Math.floor(Math.random() * subscriptionTasksPool.length)];
-        window.currentSubTask = randomTask;
-
-        document.getElementById("sub-condition-text").textContent = randomTask.condition;
-        document.getElementById("sub-question-text").textContent = randomTask.question;
-
-        const container = document.getElementById("sub-options-container");
-        container.innerHTML = randomTask.options.map((opt, i) => `
-          <label style="display: block; margin-bottom: 10px; cursor: pointer; font-size: 14px;">
-            <input type="radio" name="sub-opt" value="${i}"> ${opt}
-          </label>
-        `).join("");
-
-        openModal("modal-subscription");
-      }
-    }
-
-    function submitSubscriptionAnswer() {
-      const selected = document.querySelector('input[name="sub-opt"]:checked');
-      if (!selected) return;
-
-      if (parseInt(selected.value) === window.currentSubTask.correct) {
-        balance += 600;
-        completedTasks.push(3);
-        saveState();
-        updateUI();
-        closeModal("modal-subscription");
-        alert("Правильно! Вы сэкономили бюджет и заработали 600 ₸!");
-      } else {
-        alert("Неверно! Попробуйте пересчитать выгоду внимательнее.");
-      }
-    }
-
-    // Статьи
-    function readArticleAndEarn(id, url) {
-      if (!readArticles.includes(id)) {
-        balance += 300;
-        readArticles.push(id);
-        saveState();
-        updateUI();
-      }
-      window.open(url, "_blank");
-    }
-  </script>
+  <script src="script.js"></script>
+</body>
+</html>script.js"></script>
 </body>
 </html>
-
