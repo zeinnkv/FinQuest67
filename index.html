@@ -8,271 +8,170 @@
 </head>
 <body>
 
-  <!-- ШАПКА САЙТА С ПЕРЕКЛЮЧАТЕЛЕМ ЯЗЫКА -->
-  <header class="header">
-    <div class="container header-content">
-      <div class="user-profile">
-        <div class="avatar">🚀</div>
-        <div>
-          <h2 id="user-name">Юный Инвестор</h2>
-          <span class="status-badge" id="user-status">Новичок в финансах</span>
-        </div>
+  <!-- Навигация / Шапка -->
+  <header class="app-header">
+    <div class="logo-area">
+      <div class="logo-icon">🚀</div>
+      <div>
+        <h1 id="user-name">Юный Инвестор</h1>
+        <span id="user-status" class="user-status">Новичок в финансах 🌱</span>
       </div>
-
-      <!-- Блок баланса и переключения языка -->
-      <div style="display: flex; gap: 12px; align-items: center;">
-        <select id="lang-selector" onchange="changeLanguage(this.value)" style="background: #313244; color: #cdd6f4; border: 1px solid #45475a; padding: 6px 10px; border-radius: 8px; font-weight: 600; cursor: pointer;">
-          <option value="ru">🇷🇺 RU</option>
-          <option value="kk">🇰🇿 KK</option>
-          <option value="en">🇬🇧 EN</option>
-        </select>
-
-        <div class="balance-card">
-          <span class="balance-label">Ваш баланс:</span>
-          <span class="balance-amount" id="balance-amount">0 ₸</span>
-        </div>
+    </div>
+    
+    <div class="header-right">
+      <select id="lang-selector">
+        <option value="ru">RU</option>
+        <option value="kk">KK</option>
+        <option value="en">EN</option>
+      </select>
+      
+      <div class="balance-card">
+        <span class="balance-label">Ваш баланс:</span>
+        <span id="balance-amount" class="balance-amount">0 ₸</span>
       </div>
     </div>
   </header>
 
-  <!-- ОСНОВНОЙ КОНТЕНТ (ДВЕ КОЛОНКИ) -->
-  <main class="container main-layout">
-
-    <!-- ЛЕВАЯ КОЛОНКА: ИНТЕРАКТИВНЫЕ БОЛЬШИЕ ЗАДАНИЯ -->
-    <section class="column tasks-column">
+  <!-- Основной контент -->
+  <main class="dashboard-grid">
+    
+    <!-- Левая колонка: Практические задания -->
+    <section class="tasks-column">
       <h2>🎯 Практические задания</h2>
       <p class="section-desc">Выполняйте квесты и зарабатывайте виртуальные деньги!</p>
 
-      <div class="cards-list">
+      <div class="task-card" id="card-task-1">
+        <div class="card-badge">Аналитика</div>
+        <div class="card-reward">+500 ₸</div>
+        <h3 class="card-title">📊 Аудит карманных расходов</h3>
+        <p class="card-desc">Запишите свои траты за последние 3 дня и распределите их по 3 категориям: «Нужно», «Хочу» и «Инвестиции».</p>
+        <button id="btn-task-1" class="btn-primary">Выполнить задание</button>
+      </div>
 
-        <!-- Задание 1: Аудит расходов -->
-        <div class="card" id="card-task-1">
-          <div class="card-header">
-            <span class="badge blue">Аналитика</span>
-            <span class="reward">+500 ₸</span>
-          </div>
-          <h3 class="card-title">📊 Аудит карманных расходов</h3>
-          <p class="card-desc">Запишите свои траты за последние 3 дня и распределите их по 3 категориям: «Нужно», «Хочу» и «Инвестиции».</p>
-          <button class="btn" id="btn-task-1" onclick="openAuditModal()">Выполнить задание</button>
-        </div>
+      <div class="task-card" id="card-task-2">
+        <div class="card-badge">Сравнение</div>
+        <div class="card-reward">+700 ₸</div>
+        <h3 class="card-title">🛒 Инспекция супермаркета</h3>
+        <p class="card-desc">Сравните два товара, рассчитайте стоимость за 1 л/кг и выберите выгодный вариант. (Попыток: 2/2)</p>
+        <button id="btn-task-2" class="btn-primary">Выполнить задание</button>
+      </div>
 
-        <!-- Задание 2: Инспектор супермаркета -->
-        <div class="card" id="card-task-2">
-          <div class="card-header">
-            <span class="badge purple">Сравнение</span>
-            <span class="reward">+700 ₸</span>
-          </div>
-          <h3 class="card-title">🛒 Инспекция супермаркета</h3>
-          <p class="card-desc">Сравните два товара, рассчитайте стоимость за 1 л/кг и выберите выгодный вариант. (Попыток: <span id="attempts-left">2</span>/2)</p>
-          <button class="btn" id="btn-task-2" onclick="openMarketModal()">Выполнить задание</button>
-        </div>
-
-        <!-- Задание 3: Охота за подписками -->
-        <div class="card" id="card-task-3">
-          <div class="card-header">
-            <span class="badge blue">Аналитика</span>
-            <span class="reward">+600 ₸</span>
-          </div>
-          <h3 class="card-title">🎧 Охота за подписками</h3>
-          <p class="card-desc">Посчитайте траты на популярные сервисы и найдите способ сэкономить на семейном тарифе.</p>
-          <button class="btn" id="btn-task-3" onclick="openSubscriptionModal()">Выполнить задание</button>
-        </div>
-
+      <div class="task-card" id="card-task-3">
+        <div class="card-badge">Аналитика</div>
+        <div class="card-reward">+600 ₸</div>
+        <h3 class="card-title">🎧 Охота за подписками</h3>
+        <p class="card-desc">Посчитайте траты на популярные сервисы и найдите способ сэкономить на семейном тарифе.</p>
+        <button id="btn-task-3" class="btn-primary">Выполнить задание</button>
       </div>
     </section>
 
-    <!-- ПРАВАЯ КОЛОНКА: БАЗА ЗНАНИЙ И ВИШЛИСТ -->
-    <section class="column info-column">
+    <!-- Правая колонка: База знаний и Цель -->
+    <section class="info-column">
       <h2>📚 База знаний & Цели</h2>
       <p class="section-desc">Читайте достоверные статьи и копите на мечту.</p>
 
-      <!-- БЛОК ВИШЛИСТА (МЕЧТА) -->
+      <!-- Вишлист / Цель -->
       <div class="info-card wishlist-card" id="wishlist-block">
-        <div class="info-header">
-          <h3>🎯 Моя главная цель (Вишлист)</h3>
-          <span class="badge blue">Накопления</span>
-        </div>
+        <div class="card-badge">Накопления</div>
+        <h3 class="card-title">🎯 Моя главная цель (Вишлист)</h3>
+        <p class="card-desc">Впишите желаемый предмет. Система сама оценит его стоимость (от 10 000 ₸ и выше):</p>
         
-        <p>Впишите желаемый предмет. Система сама оценит его стоимость (от 10 000 ₸ и выше):</p>
-
-        <!-- Форма ввода названия -->
         <form id="wishlist-form" onsubmit="setWishlistGoal(event)">
-          <input type="text" id="wish-title-input" placeholder="Название (напр. Наушники)" required>
-          <button type="submit" class="btn btn-full" style="margin-top: 10px;">Загадать мечту 🚀</button>
+          <input type="text" id="wish-title-input" placeholder="Название (напр. Наушники, Кроссовки)" required>
+          <button type="submit" class="btn-primary" style="margin-top: 10px; width: 100%;">Загадать мечту 🚀</button>
         </form>
 
-        <!-- Блок прогресса и пополнения -->
         <div id="wishlist-progress-box" class="hidden">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-            <strong id="wish-display-title" style="color: #fab387;"></strong>
-            <span id="wish-display-price" style="font-weight: 700; color: #a6e3a1;"></span>
+          <div class="wish-info-row">
+            <strong id="wish-display-title">Цель</strong>
+            <span id="wish-display-price">0 / 0 ₸</span>
           </div>
-          
-          <!-- Шкала прогресса -->
-          <div class="progress-bar-bg">
-            <div class="progress-bar-fill" id="wish-progress-fill"></div>
+          <div class="progress-bar-container">
+            <div id="wish-progress-fill" class="progress-bar-fill"></div>
           </div>
-
-          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-top: 6px; color: #a6adc8;">
-            <span id="wish-percent-text">0% накоплено</span>
+          <div class="wish-info-row" style="margin-top: 8px;">
+            <span id="wish-percent-text">0%</span>
             <span id="wish-remains-text">Осталось: 0 ₸</span>
           </div>
-
-          <p style="font-size: 0.85rem; margin-top: 12px; margin-bottom: 6px; color: #cdd6f4;">Сколько отложить из баланса?</p>
-          <div style="display: flex; gap: 8px;">
-            <input type="number" id="wish-deposit-input" placeholder="Сумма (₸)" min="1" style="flex: 1; padding: 6px 10px; border-radius: 6px; border: 1px solid #45475a; background: #313244; color: #cdd6f4;">
-            <button class="btn" onclick="depositToWishlist()" style="padding: 6px 12px; font-size: 0.85rem;">Отложить</button>
+          
+          <div class="deposit-box" style="margin-top: 12px; display: flex; gap: 8px;">
+            <input type="number" id="wish-deposit-input" placeholder="Сумма для пополнения (₸)" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #45475a; background: #181825; color: #cdd6f4;">
+            <button type="button" class="btn-primary" onclick="depositToWishlist()" style="padding: 8px 16px;">Отложить</button>
           </div>
-
-          <button class="btn btn-secondary" onclick="resetWishlistGoal()" style="margin-top: 10px; font-size: 0.8rem; padding: 6px; width: 100%;">Сбросить цель 🔄</button>
+          <button type="button" class="btn-secondary" onclick="resetWishlistGoal()" style="margin-top: 8px; width: 100%; background: #313244; color: #f38ba8; border: none; padding: 6px; border-radius: 6px; cursor: pointer;">Сбросить цель 🔄</button>
         </div>
       </div>
 
-      <!-- Статья 1: Депозиты -->
-      <div class="info-card" id="info-card-1">
-        <div class="info-header">
-          <h3>🏦 Что такое депозит и как работают вклады?</h3>
-          <span class="reward">+300 ₸</span>
-        </div>
-        <p>Узнайте, как деньги в банке приносят пассивный доход за счет сложных процентов и почему депозит защищен государством.</p>
-        <button class="btn btn-secondary" id="btn-info-1" onclick="readArticleAndEarn(1, 'https://fingramota.kz/ru/rubric/deposits')">Читать статью (+300 ₸)</button>
+      <!-- Статья 1 -->
+      <div class="info-card">
+        <div class="card-reward">+300 ₸</div>
+        <h3 class="card-title">📚 Что такое депозит и как работают вклады?</h3>
+        <p class="card-desc">Узнайте, как деньги в банке приносят пассивный доход за счет сложных процентов и почему депозит защищен государством.</p>
+        <button id="btn-info-1" class="btn-secondary">Читать статью (+300 ₸)</button>
       </div>
 
-      <!-- Статья 2: Подушка безопасности -->
-      <div class="info-card" id="info-card-2">
-        <div class="info-header">
-          <h3>🛡️ Финансовая подушка безопасности</h3>
-          <span class="reward">+400 ₸</span>
-        </div>
-        <p>Зачем нужен запас денег на «черный день», сколько месячных расходов он должен закрывать и где его правильно хранить.</p>
-        <button class="btn btn-secondary" id="btn-info-2" onclick="readArticleAndEarn(2, 'https://fingramota.kz/ru/news/chto-takoe-finansovaya-podushka-bezopasnosti-i-kak-ee-sformirovat')">Читать статью (+400 ₸)</button>
+      <!-- Статья 2 -->
+      <div class="info-card">
+        <div class="card-reward">+400 ₸</div>
+        <h3 class="card-title">🛡️ Финансовая подушка безопасности</h3>
+        <p class="card-desc">Зачем нужен запас денег на «черный день», сколько месячных расходов он должен закрывать и где его правильно хранить.</p>
+        <button id="btn-info-2" class="btn-secondary">Читать статью (+400 ₸)</button>
       </div>
 
       <!-- Лайфхак -->
-      <div class="info-card hint">
-        <h3>💡 Быстрый лайфхак: Правило 50/30/20</h3>
-        <p>Делите доходы: <strong>50%</strong> — на обязательные нужды, <strong>30%</strong> — на желания и развлечения, <strong>20%</strong> — откладывайте в сбережения.</p>
+      <div class="info-card tip-card">
+        <h3 class="card-title">💡 Быстрый лайфхак: Правило 50/30/20</h3>
+        <p class="card-desc">Делите доходы: 50% — на обязательные нужды, 30% — на желания и развлечения, 20% — откладывайте в сбережения.</p>
       </div>
-
     </section>
 
   </main>
 
-  <!-- ==================== МОДАЛЬНЫЕ ОКНА ==================== -->
-
-  <!-- МОДАЛКА 0: РЕГИСТРАЦИЯ ПРИ ПЕРВОМ ВХОДЕ -->
-  <div class="modal-overlay" id="modal-welcome">
-    <div class="modal-window">
+  <!-- Модальные окна -->
+  <div id="modal-welcome" class="modal-overlay">
+    <div class="modal-content">
       <h2>👋 Добро пожаловать в FinQuest!</h2>
-      <p class="modal-subtitle">Давайте познакомимся перед началом игры:</p>
-
-      <form id="welcome-form" onsubmit="submitRegistration(event)">
-        <div class="form-group">
-          <label for="reg-name">Ваше имя:</label>
-          <input type="text" id="reg-name" placeholder="Например: Арман" required>
-        </div>
-
-        <div class="form-group">
-          <label for="reg-age">Возраст:</label>
-          <input type="number" id="reg-age" placeholder="Например: 15" min="7" max="99" required>
-        </div>
-
-        <div class="form-group">
-          <label for="reg-lang">Выберите язык / Тілді таңдаңыз:</label>
-          <select id="reg-lang" required>
-            <option value="ru">Русский 🇷🇺</option>
-            <option value="kk">Қазақша 🇰🇿</option>
-            <option value="en">English 🇬🇧</option>
-          </select>
-        </div>
-
-        <button type="submit" class="btn btn-full">Начать путешествие 🚀</button>
+      <p>Давайте познакомимся. Как вас зовут и сколько вам лет?</p>
+      <form id="reg-form">
+        <input type="text" id="reg-name" placeholder="Ваше имя" required style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #45475a; background: #181825; color: #cdd6f4;">
+        <input type="number" id="reg-age" placeholder="Ваш возраст" min="10" max="25" required style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #45475a; background: #181825; color: #cdd6f4;">
+        <select id="reg-lang" style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #45475a; background: #181825; color: #cdd6f4;">
+          <option value="ru">Русский</option>
+          <option value="kk">Қазақша</option>
+          <option value="en">English</option>
+        </select>
+        <button type="submit" class="btn-primary" style="width: 100%;">Начать путешествие 🚀</button>
       </form>
     </div>
   </div>
 
-  <!-- МОДАЛКА 1: АУДИТ РАСХОДОВ -->
-  <div class="modal-overlay" id="modal-audit" onclick="closeOnOverlay(event, 'modal-audit')">
-    <div class="modal-window">
-      <button class="close-btn" onclick="closeModal('modal-audit')">&times;</button>
+  <div id="modal-audit" class="modal-overlay" onclick="closeOnOverlay(event, 'modal-audit')">
+    <div class="modal-content">
       <h2>📊 Аудит карманных расходов</h2>
-      <p class="modal-subtitle">Заполните 3 последние покупки и распределите по категориям:</p>
-
-      <form id="audit-form" onsubmit="submitAudit(event)">
-        <div class="audit-row">
-          <input type="text" placeholder="Товар (напр. Снеки)" required>
-          <input type="number" placeholder="Сумма (₸)" required>
-          <select required>
-            <option value="">Категория...</option>
-            <option value="need">Нужно</option>
-            <option value="want">Хочу</option>
-            <option value="invest">Инвестиция</option>
-          </select>
-        </div>
-        <div class="audit-row">
-          <input type="text" placeholder="Товар (напр. Проезд)" required>
-          <input type="number" placeholder="Сумма (₸)" required>
-          <select required>
-            <option value="">Категория...</option>
-            <option value="need">Нужно</option>
-            <option value="want">Хочу</option>
-            <option value="invest">Инвестиция</option>
-          </select>
-        </div>
-        <div class="audit-row">
-          <input type="text" placeholder="Товар (напр. Книга)" required>
-          <input type="number" placeholder="Сумма (₸)" required>
-          <select required>
-            <option value="">Категория...</option>
-            <option value="need">Нужно</option>
-            <option value="want">Хочу</option>
-            <option value="invest">Инвестиция</option>
-          </select>
-        </div>
-
-        <button type="submit" class="btn btn-full">Сохранить и получить +500 ₸</button>
-      </form>
+      <p>Распределите тестовые траты (кофе 1000₸, учебник 2500₸, кино 2000₸) по правильным категориям и заберите награду!</p>
+      <button class="btn-primary" onclick="submitAudit(event)" style="width: 100%; margin-top: 15px;">Завершить аудит (+500 ₸)</button>
     </div>
   </div>
 
-  <!-- МОДАЛКА 2: ИНСПЕКТОР СУПЕРМАРКЕТА -->
-  <div class="modal-overlay" id="modal-market" onclick="closeOnOverlay(event, 'modal-market')">
-    <div class="modal-window wide">
-      <button class="close-btn" onclick="closeModal('modal-market')">&times;</button>
+  <div id="modal-market" class="modal-overlay" onclick="closeOnOverlay(event, 'modal-market')">
+    <div class="modal-content">
       <h2>🛒 Инспекция супермаркета</h2>
-      <p class="modal-subtitle">Сравните два товара по категориям и выберите наиболее выгодный:</p>
-
-      <div class="products-compare" id="products-container"></div>
-
-      <div id="market-feedback" class="feedback-msg"></div>
-
-      <button class="btn btn-full" id="market-submit-btn" onclick="submitMarketChoice()">Проверить выбор (+700 ₸)</button>
-      <button class="btn btn-full secondary hidden" id="market-retry-btn" onclick="retryMarketTask()">Попробовать ещё раз 🔄</button>
+      <p>Выберите наиболее выгодный товар по цене за единицу объема:</p>
+      <div id="products-container" style="margin: 15px 0; display: flex; flex-direction: column; gap: 10px;"></div>
+      <button class="btn-primary" onclick="submitMarketChoice()" style="width: 100%;">Проверить выбор (+700 ₸)</button>
     </div>
   </div>
 
-  <!-- МОДАЛКА 3: ОХОТА ЗА ПОДПИСКАМИ -->
-  <div class="modal-overlay" id="modal-subscription" onclick="closeOnOverlay(event, 'modal-subscription')">
-    <div class="modal-window">
-      <button class="close-btn" onclick="closeModal('modal-subscription')">&times;</button>
+  <div id="modal-subscription" class="modal-overlay" onclick="closeOnOverlay(event, 'modal-subscription')">
+    <div class="modal-content">
       <h2>🎧 Охота за подписками</h2>
-      
-      <div class="condition-box">
-        <p id="sub-condition-text">Загрузка...</p>
-      </div>
-
-      <p class="question-text" id="sub-question-text">Загрузка...</p>
-
-      <div class="options-group" id="sub-options-container"></div>
-
-      <div id="sub-feedback" class="feedback-msg"></div>
-
-      <button class="btn btn-full" onclick="submitSubscriptionAnswer()">Отправить ответ (+600 ₸)</button>
+      <p id="sub-condition-text"></p>
+      <p style="font-weight: bold; margin-top: 10px;" id="sub-question-text"></p>
+      <div id="sub-options-container" style="margin: 15px 0;"></div>
+      <button class="btn-primary" onclick="submitSubscriptionAnswer()" style="width: 100%;">Ответить (+600 ₸)</button>
     </div>
   </div>
 
   <script src="script.js"></script>
-</body>
-</html>script.js"></script>
 </body>
 </html>
