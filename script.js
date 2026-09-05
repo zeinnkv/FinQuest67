@@ -2,6 +2,7 @@
 let balance = parseInt(localStorage.getItem("fin_balance")) || 0;
 let completedTasks = JSON.parse(localStorage.getItem("fin_completed_tasks")) || [];
 let readArticles = JSON.parse(localStorage.getItem("fin_read_articles")) || [];
+let wishlist = JSON.parse(localStorage.getItem("fin_wishlist")) || null;
 
 // Состояние для Задания 2 (Супермаркет)
 let marketAttempts = parseInt(localStorage.getItem("fin_market_attempts")) || 2;
@@ -119,6 +120,9 @@ function updateUI() {
       btn.textContent = "Прочитано ✓";
     }
   });
+
+  // Обновление отображения вишлиста
+  updateWishlistUI();
 }
 
 function saveState() {
@@ -126,6 +130,7 @@ function saveState() {
   localStorage.setItem("fin_completed_tasks", JSON.stringify(completedTasks));
   localStorage.setItem("fin_read_articles", JSON.stringify(readArticles));
   localStorage.setItem("fin_market_attempts", marketAttempts);
+  localStorage.setItem("fin_wishlist", JSON.stringify(wishlist));
 }
 
 // ==================== МОДАЛКИ (ОТКРЫТИЕ / ЗАКРЫТИЕ) ====================
@@ -141,6 +146,52 @@ function closeOnOverlay(e, id) {
   if (e.target.classList.contains("modal-overlay")) {
     closeModal(id);
   }
+}
+
+// ==================== ВИШЛИСТ (ЦЕЛЬ) ====================
+function setWishlistGoal(e) {
+  e.preventDefault();
+  const title = document.getElementById("wish-title-input").value.trim();
+  const price = parseInt(document.getElementById("wish-price-input").value);
+
+  if (price < 10000 || price > 50000) {
+    alert("Сумма цели должна быть от 10 000 ₸ до 50 000 ₸!");
+    return;
+  }
+
+  wishlist = { title, price };
+  saveState();
+  updateUI();
+}
+
+function resetWishlistGoal() {
+  wishlist = null;
+  localStorage.removeItem("fin_wishlist");
+  document.getElementById("wishlist-form").classList.remove("hidden");
+  document.getElementById("wishlist-progress-box").classList.add("hidden");
+}
+
+function updateWishlistUI() {
+  const form = document.getElementById("wishlist-form");
+  const progressBox = document.getElementById("wishlist-progress-box");
+
+  if (!wishlist) {
+    if (form) form.classList.remove("hidden");
+    if (progressBox) progressBox.classList.add("hidden");
+    return;
+  }
+
+  if (form) form.classList.add("hidden");
+  if (progressBox) progressBox.classList.remove("hidden");
+
+  let percent = Math.min(100, Math.round((balance / wishlist.price) * 100));
+  let remains = Math.max(0, wishlist.price - balance);
+
+  document.getElementById("wish-display-title").textContent = wishlist.title;
+  document.getElementById("wish-display-price").textContent = `${wishlist.price} ₸`;
+  document.getElementById("wish-progress-fill").style.width = `${percent}%`;
+  document.getElementById("wish-percent-text").textContent = `${percent}% накоплено`;
+  document.getElementById("wish-remains-text").textContent = percent >= 100 ? "Цель достигнута! 🎉" : `Осталось: ${remains} ₸`;
 }
 
 // ==================== БАЗА ЗНАНИЙ (СТАТЬИ) ====================
