@@ -1,220 +1,272 @@
-/* Основные переменные и сброс стилей */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 body {
-    font-family: 'Outfit', sans-serif;
-    background-color: #0f172a;
-    color: #f8fafc;
-    min-height: 100vh;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+  line-height: 1.6;
+  padding-bottom: 50px;
 }
 
-.app-container {
-    width: 100%;
-    max-width: 600px;
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-/* Шапка */
+/* ШАПКА */
 .header {
-    background: linear-gradient(135deg, #1e293b, #334155);
-    border-radius: 20px;
-    padding: 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+  background: #181825;
+  border-bottom: 1px solid #313244;
+  padding: 18px 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
-.user-info h1 {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 6px;
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  font-size: 2rem;
+  background: #313244;
+  padding: 6px;
+  border-radius: 50%;
 }
 
 .status-badge {
-    background-color: #38bdf8;
-    color: #0f172a;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 20px;
-    text-transform: uppercase;
+  display: inline-block;
+  background: #89b4fa;
+  color: #11111b;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 12px;
+  margin-top: 4px;
 }
 
 .balance-card {
-    text-align: right;
+  background: linear-gradient(135deg, #313244, #45475a);
+  border: 1px solid #585b70;
+  padding: 10px 20px;
+  border-radius: 14px;
+  text-align: right;
 }
 
 .balance-label {
-    display: block;
-    font-size: 12px;
-    color: #94a3b8;
-    margin-bottom: 4px;
+  display: block;
+  font-size: 0.8rem;
+  color: #a6adc8;
 }
 
-.balance-value {
-    font-size: 22px;
-    font-weight: 700;
-    color: #4ade80;
+.balance-amount {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #a6e3a1;
 }
 
-/* Секции */
-.section {
-    margin-bottom: 30px;
+/* СЕТКА */
+.main-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-top: 30px;
 }
 
-.section h2 {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 4px;
+@media (max-width: 768px) {
+  .main-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.column h2 {
+  font-size: 1.4rem;
+  color: #f5e0dc;
+  margin-bottom: 4px;
 }
 
 .section-desc {
-    font-size: 13px;
-    color: #94a3b8;
-    margin-bottom: 14px;
+  font-size: 0.9rem;
+  color: #a6adc8;
+  margin-bottom: 20px;
 }
 
-/* Карточки */
-.cards-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+/* КАРТОЧКИ */
+.cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 .card {
-    background-color: #1e293b;
-    border-radius: 16px;
-    padding: 16px 18px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  background: #181825;
+  border: 1px solid #313244;
+  border-radius: 16px;
+  padding: 20px;
+  transition: transform 0.2s ease;
 }
 
-.card-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.card.completed {
+  opacity: 0.6;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.badge.blue { background: rgba(137, 180, 250, 0.15); color: #89b4fa; }
+.badge.green { background: rgba(166, 227, 161, 0.15); color: #a6e3a1; }
+.badge.purple { background: rgba(203, 166, 247, 0.15); color: #cba6f7; }
+
+.reward {
+  font-weight: 700;
+  color: #a6e3a1;
 }
 
 .card-title {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 2px;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: #f38ba8;
 }
 
 .card-desc {
-    font-size: 13px;
-    color: #94a3b8;
+  font-size: 0.9rem;
+  color: #bac2de;
+  margin-bottom: 16px;
 }
 
-.card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 4px;
+/* ИНФО-КАРТОЧКИ */
+.info-card {
+  background: #181825;
+  border-left: 4px solid #89b4fa;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
 }
 
-/* Кнопки */
+.info-card h3 {
+  font-size: 1rem;
+  color: #89b4fa;
+  margin-bottom: 6px;
+}
+
+.info-card p {
+  font-size: 0.88rem;
+  color: #a6adc8;
+}
+
+/* КНОПКИ */
 .btn {
-    background: linear-gradient(135deg, #38bdf8, #0284c7);
-    color: #ffffff;
-    border: none;
-    padding: 8px 14px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: opacity 0.2s, transform 0.1s;
-    white-space: nowrap;
+  background: #a6e3a1;
+  color: #11111b;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
 }
 
 .btn:hover {
-    opacity: 0.9;
-}
-
-.btn:active {
-    transform: scale(0.96);
+  background: #94e2d5;
 }
 
 .btn:disabled {
-    background: #334155;
-    color: #64748b;
-    cursor: not-allowed;
-    transform: none;
+  background: #45475a;
+  color: #a6adc8;
+  cursor: not-allowed;
 }
 
-.reward {
-    color: #4ade80;
-    font-weight: 600;
-    font-size: 14px;
+.btn-full {
+  margin-top: 15px;
 }
 
-/* Вишлист и прогресс-бар */
-.add-wish-card {
-    background: #182235;
+/* МОДАЛКА */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(17, 17, 27, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+  padding: 15px;
 }
 
-.form-group {
-    display: flex;
-    gap: 8px;
-    margin-top: 8px;
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.form-group input {
-    flex: 1;
-    background: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 10px;
-    padding: 8px 12px;
-    color: #fff;
-    font-family: 'Outfit', sans-serif;
-    font-size: 13px;
+.modal-window {
+  background: #1e1e2e;
+  border: 1px solid #45475a;
+  border-radius: 20px;
+  padding: 24px;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
 }
 
-.form-group input:focus {
-    outline: none;
-    border-color: #38bdf8;
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: #a6adc8;
+  font-size: 1.8rem;
+  cursor: pointer;
 }
 
-.progress-container {
-    width: 100%;
-    background-color: #0f172a;
-    border-radius: 8px;
-    height: 10px;
-    overflow: hidden;
-    margin: 8px 0 4px 0;
+.audit-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
 }
 
-.progress-bar {
-    height: 100%;
-    background: linear-gradient(90deg, #38bdf8, #4ade80);
-    border-radius: 8px;
-    transition: width 0.3s ease;
-}
-
-.wish-actions {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-.wish-actions input {
-    width: 90px;
-    background: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    padding: 6px 10px;
-    color: #fff;
-    font-size: 13px;
+.audit-row input, .audit-row select {
+  background: #313244;
+  border: 1px solid #45475a;
+  color: #cdd6f4;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 0.85rem;
 }
