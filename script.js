@@ -6,10 +6,7 @@ const translations = {
     status2: "Продвинутый 📈",
     status3: "Финансовый Гуру 🧠",
     balanceLabel: "Ваш баланс:",
-    tabTasks: "🎯 Квесты",
-    tabKnowledge: "📚 База знаний",
-    tabWishlist: "🚀 Моя копилка",
-    tasksTitle: "Практические задания",
+    tasksTitle: "🎯 Практические задания",
     tasksDesc: "Выполняйте квесты и зарабатывайте виртуальные деньги!",
     task1Title: "📊 Аудит карманных расходов",
     task1Desc: "Запишите свои траты за последние 3 дня и распределите их по 3 категориям: «Нужно», «Хочу» и «Инвестиции».",
@@ -22,18 +19,18 @@ const translations = {
     btnCompleted: "Выполнено ✓",
     btnRead: "Читать статью",
     btnReadDone: "Прочитано ✓",
-    knowledgeTitle: "База знаний & Лайфхаки",
-    knowledgeDesc: "Читайте достоверные статьи и изучайте финансовые правила.",
-    wishHeader: "🎯 Цель на мечту",
-    wishDesc: "Впишите желаемый предмет. Система сама оценит его стоимость (от 10 000 ₸ и выше):",
+    knowledgeTitle: "📚 База знаний & Цели",
+    knowledgeDesc: "Читайте достоверные статьи и копите на мечту.",
+    wishTitle: "🎯 Моя главная цель (Вишлист)",
+    wishDesc: "Впишите желаемый предмет. Система сама оценит его реальную стоимость (от 10 000 ₸ и выше):",
     wishPlaceholder: "Название (напр. Наушники, Кроссовки)",
     wishBtn: "Загадать мечту 🚀",
     wishReset: "Сбросить цель 🔄",
     wishDone: "Цель полностью достигнута! 🎉",
     wishLeft: "Осталось: ",
-    depositLabel: "Сколько отложить из баланса?",
+    wishSaved: "Уже отложено: ",
     depositBtn: "Отложить",
-    depositPlaceholder: "Сумма (₸)",
+    depositPlaceholder: "Сумма для пополнения (₸)",
     errorNoMoney: "У вас недостаточно средств на балансе!",
     errorInvalidAmount: "Введите корректную сумму для откладывания!"
   },
@@ -43,10 +40,7 @@ const translations = {
     status2: "Тәжірибелі 📈",
     status3: "Қаржы Гуруы 🧠",
     balanceLabel: "Сіздің балансыңыз:",
-    tabTasks: "🎯 Квесттер",
-    tabKnowledge: "📚 Білім базасы",
-    tabWishlist: "🚀 Менің копилкам",
-    tasksTitle: "Практикалық тапсырмалар",
+    tasksTitle: "🎯 Практикалық тапсырмалар",
     tasksDesc: "Квесттерді орындап, виртуалды ақша табыңыз!",
     task1Title: "📊 Қалта шығындарының аудиті",
     task1Desc: "Соңғы 3 күндегі шығындарыңызды жазып, 3 санатқа бөліңіз: «Қажет», «Қалаймын» және «Инвестиция».",
@@ -59,18 +53,18 @@ const translations = {
     btnCompleted: "Орындалды ✓",
     btnRead: "Мақаланы оқу",
     btnReadDone: "Оқылды ✓",
-    knowledgeTitle: "Білім базасы & Лайфхактар",
-    knowledgeDesc: "Пайдалы мақалаларды оқып, қаржылық ережелерді үйреніңіз.",
-    wishHeader: "🎯 Арман мақсаты",
+    knowledgeTitle: "📚 Білім базасы & Мақсаттар",
+    knowledgeDesc: "Пайдалы мақалаларды оқып, арманыңызға ақша жинаңыз.",
+    wishTitle: "🎯 Мекемедегі мақсатым (Wishlist)",
     wishDesc: "Қалаған заттың атын жазыңыз. Жүйе оның бағасын есептейді (10 000 ₸ бастап):",
     wishPlaceholder: "Атауы (мыс. Құлаққап, Кроссовки)",
     wishBtn: "Армандау 🚀",
     wishReset: "Мақсатты нөлдеу 🔄",
     wishDone: "Мақсатқа толық жеттіңіз! 🎉",
     wishLeft: "Қалды: ",
-    depositLabel: "Баланстан қанша аудару керек?",
+    wishSaved: "Қазірдің өзінде жиналды: ",
     depositBtn: "Салу",
-    depositPlaceholder: "Сома (₸)",
+    depositPlaceholder: "Толықтыру сомасы (₸)",
     errorNoMoney: "Балансыңызда қаражат жеткіліксіз!",
     errorInvalidAmount: "Дұрыс соманы енгізіңіз!"
   },
@@ -80,10 +74,7 @@ const translations = {
     status2: "Advanced 📈",
     status3: "Finance Guru 🧠",
     balanceLabel: "Your balance:",
-    tabTasks: "🎯 Quests",
-    tabKnowledge: "📚 Knowledge Base",
-    tabWishlist: "🚀 My Wishlist",
-    tasksTitle: "Practical Quests",
+    tasksTitle: "🎯 Practical Quests",
     tasksDesc: "Complete quests and earn virtual money!",
     task1Title: "📊 Pocket Expenses Audit",
     task1Desc: "Track your expenses for the last 3 days into 3 categories: Needs, Wants, and Investments.",
@@ -96,18 +87,18 @@ const translations = {
     btnCompleted: "Completed ✓",
     btnRead: "Read Article",
     btnReadDone: "Read ✓",
-    knowledgeTitle: "Knowledge Base & Tips",
-    knowledgeDesc: "Read trusted articles and learn financial rules.",
-    wishHeader: "🎯 Dream Goal",
+    knowledgeTitle: "📚 Knowledge Base & Goals",
+    knowledgeDesc: "Read trusted articles and save up for your dream.",
+    wishTitle: "🎯 My Main Goal (Wishlist)",
     wishDesc: "Type your desired item. The system will calculate its estimated price (from 10,000 ₸+):",
     wishPlaceholder: "Name (e.g. Headphones, Sneakers)",
     wishBtn: "Set Goal 🚀",
     wishReset: "Reset Goal 🔄",
     wishDone: "Goal fully achieved! 🎉",
     wishLeft: "Remains: ",
-    depositLabel: "How much to deposit from balance?",
+    wishSaved: "Already saved: ",
     depositBtn: "Deposit",
-    depositPlaceholder: "Amount (₸)",
+    depositPlaceholder: "Deposit amount (₸)",
     errorNoMoney: "You don't have enough balance!",
     errorInvalidAmount: "Please enter a valid amount!"
   }
@@ -118,6 +109,8 @@ let userProfile = JSON.parse(localStorage.getItem("fin_user_profile")) || null;
 let balance = parseInt(localStorage.getItem("fin_balance")) || 0;
 let completedTasks = JSON.parse(localStorage.getItem("fin_completed_tasks")) || [];
 let readArticles = JSON.parse(localStorage.getItem("fin_read_articles")) || [];
+
+// Теперь wishlist хранит название, сгенерированную цену и уже отложенную сумму (saved)
 let wishlist = JSON.parse(localStorage.getItem("fin_wishlist")) || null;
 
 let marketCategories = [
@@ -152,16 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК
-function switchTab(tabId, event) {
-  document.querySelectorAll(".tab-pane").forEach(pane => pane.classList.remove("active"));
-  document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
-
-  document.getElementById(`tab-${tabId}`).classList.add("active");
-  event.currentTarget.classList.add("active");
-}
-
-// Регистрация
+// Отправка формы регистрации
 function submitRegistration(e) {
   e.preventDefault();
   const name = document.getElementById("reg-name").value.trim();
@@ -180,13 +164,14 @@ function submitRegistration(e) {
   updateUI();
 }
 
-// Смена языка
+// Переключение языка вручную
 function changeLanguage(lang) {
   if (!userProfile) {
     userProfile = { name: "Пользователь", age: 15, lang: lang };
   } else {
     userProfile.lang = lang;
   }
+
   localStorage.setItem("fin_user_profile", JSON.stringify(userProfile));
   updateUI();
 }
@@ -196,6 +181,7 @@ function updateUI() {
   const lang = userProfile ? userProfile.lang : "ru";
   const t = translations[lang] || translations.ru;
 
+  // Имя и статус
   if (userProfile && userProfile.name) {
     document.getElementById("user-name").textContent = userProfile.name;
   } else {
@@ -207,35 +193,35 @@ function updateUI() {
   else if (balance >= 700) statusEl.textContent = t.status2;
   else statusEl.textContent = t.status1;
 
+  // Баланс
   document.getElementById("balance-amount").textContent = `${balance} ₸`;
 
-  // Переводы текста
+  // Перевод текста статических элементов
   document.querySelector(".balance-label").textContent = t.balanceLabel;
-  document.getElementById("tab-btn-tasks").textContent = t.tabTasks;
-  document.getElementById("tab-btn-knowledge").textContent = t.tabKnowledge;
-  document.getElementById("tab-btn-wishlist").textContent = t.tabWishlist;
-
-  document.querySelector("#tab-tasks .section-header h2").textContent = t.tasksTitle;
-  document.querySelector("#tab-tasks .section-desc").textContent = t.tasksDesc;
-  document.querySelector("#tab-knowledge .section-header h2").textContent = t.knowledgeTitle;
-  document.querySelector("#tab-knowledge .section-desc").textContent = t.knowledgeDesc;
+  document.querySelector(".tasks-column h2").textContent = t.tasksTitle;
+  document.querySelector(".tasks-column .section-desc").textContent = t.tasksDesc;
+  document.querySelector(".info-column h2").textContent = t.knowledgeTitle;
+  document.querySelector(".info-column .section-desc").textContent = t.knowledgeDesc;
 
   document.querySelector("#card-task-1 .card-title").textContent = t.task1Title;
   document.querySelector("#card-task-1 .card-desc").textContent = t.task1Desc;
+
   document.querySelector("#card-task-2 .card-title").textContent = t.task2Title;
   document.querySelector("#card-task-2 .card-desc").childNodes[0].nodeValue = t.task2Desc + ` (${t.attemptsText}`;
+
   document.querySelector("#card-task-3 .card-title").textContent = t.task3Title;
   document.querySelector("#card-task-3 .card-desc").textContent = t.task3Desc;
 
-  document.querySelector("#wishlist-block h3").textContent = t.wishHeader;
-  document.getElementById("wish-desc-text").textContent = t.wishDesc;
+  document.querySelector("#wishlist-block h3").textContent = t.wishTitle;
+  document.querySelector("#wishlist-block p").textContent = t.wishDesc;
   document.getElementById("wish-title-input").placeholder = t.wishPlaceholder;
   document.querySelector("#wishlist-form button").textContent = t.wishBtn;
-  document.getElementById("deposit-label").textContent = t.depositLabel;
-  document.getElementById("wish-deposit-input").placeholder = t.depositPlaceholder;
-  document.getElementById("deposit-action-btn").textContent = t.depositBtn;
 
-  // Статусы кнопок заданий
+  // Кнопка и инпут пополнения копилки в HTML (если присутствуют)
+  const depositInput = document.getElementById("wish-deposit-input");
+  if (depositInput) depositInput.placeholder = t.depositPlaceholder;
+
+  // Состояние кнопок заданий
   for (let i = 1; i <= 3; i++) {
     const btn = document.getElementById(`btn-task-${i}`);
     const card = document.getElementById(`card-task-${i}`);
@@ -251,7 +237,7 @@ function updateUI() {
     }
   }
 
-  // Статусы статей
+  // Состояние кнопок статей
   for (let i = 1; i <= 2; i++) {
     const btn = document.getElementById(`btn-info-${i}`);
     if (btn) {
@@ -275,22 +261,30 @@ function saveState() {
   localStorage.setItem("fin_wishlist", JSON.stringify(wishlist));
 }
 
+// ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================
 function openModal(id) { document.getElementById(id).classList.add("active"); }
 function closeModal(id) { document.getElementById(id).classList.remove("active"); }
 function closeOnOverlay(e, id) { if (e.target.classList.contains("modal-overlay")) closeModal(id); }
 
-// ==================== ВИШЛИСТ ====================
+// ==================== НОВАЯ ЛОГИКА ВИШЛИСТА ====================
+
+// Генерация случайной цены от 10 000 ₸ и выше (с учетом умных ключевых слов или случайного разброса)
 function calculateSmartPrice(title) {
   const lower = title.toLowerCase();
   let basePrice = 15000;
-  if (lower.includes("телефон") || lower.includes("айфон") || lower.includes("смартфон") || lower.includes("ноутбук")) {
+
+  if (lower.includes("телефон") || lower.includes("айфон") || lower.includes("смартфон") || lower.includes("ноутбук") || lower.includes("macbook")) {
     basePrice = 45000;
-  } else if (lower.includes("наушники") || lower.includes("кроссовки") || lower.includes("колонка")) {
+  } else if (lower.includes("наушники") || lower.includes("кроссовки") || lower.includes("колонка") || lower.includes("планшет")) {
     basePrice = 20000;
   }
+
+  // Добавляем случайную надбавку от 0 до 15 000 тенге, чтобы цена всегда была динамической (от 10000 и выше)
   const randomAddition = Math.floor(Math.random() * 30001);
   let finalPrice = basePrice + randomAddition;
-  return finalPrice < 10000 ? 10000 : finalPrice;
+  
+  if (finalPrice < 10000) finalPrice = 10000;
+  return finalPrice;
 }
 
 function setWishlistGoal(e) {
@@ -298,7 +292,12 @@ function setWishlistGoal(e) {
   const title = document.getElementById("wish-title-input").value.trim();
   if (!title) return;
 
-  wishlist = { title, price: calculateSmartPrice(title), saved: 0 };
+  wishlist = {
+    title: title,
+    price: calculateSmartPrice(title),
+    saved: 0 // Изначально отложено 0 тенге
+  };
+
   saveState();
   updateUI();
   document.getElementById("wish-title-input").value = "";
@@ -310,19 +309,33 @@ function resetWishlistGoal() {
   updateUI();
 }
 
+// Функция пополнения копилки из общего баланса игрока
 function depositToWishlist() {
   if (!wishlist) return;
+
   const depositInput = document.getElementById("wish-deposit-input");
   const amount = parseInt(depositInput.value);
   const lang = userProfile ? userProfile.lang : "ru";
   const t = translations[lang] || translations.ru;
 
-  if (isNaN(amount) || amount <= 0) { alert(t.errorInvalidAmount); return; }
-  if (amount > balance) { alert(t.errorNoMoney); return; }
+  if (isNaN(amount) || amount <= 0) {
+    alert(t.errorInvalidAmount);
+    return;
+  }
 
+  if (amount > balance) {
+    alert(t.errorNoMoney);
+    return;
+  }
+
+  // Списываем с общего баланса и добавляем в копилку мечты
   balance -= amount;
   wishlist.saved += amount;
-  if (wishlist.saved > wishlist.price) wishlist.saved = wishlist.price;
+
+  // Ограничиваем, чтобы накопленная сумма не превышала 100% стоимости (по желанию)
+  if (wishlist.saved > wishlist.price) {
+    wishlist.saved = wishlist.price;
+  }
 
   depositInput.value = "";
   saveState();
@@ -345,6 +358,7 @@ function updateWishlistUI() {
   if (form) form.classList.add("hidden");
   if (progressBox) progressBox.classList.remove("hidden");
 
+  // Расчет прогресса на основе СКОЛЬКО ОТЛОЖЕНО в копилку, а не общего баланса
   let percent = Math.min(100, Math.round((wishlist.saved / wishlist.price) * 100));
   let remains = Math.max(0, wishlist.price - wishlist.saved);
 
@@ -360,7 +374,7 @@ function updateWishlistUI() {
   }
 }
 
-// ==================== ЗАДАНИЯ И СТАТЬИ ====================
+// ==================== ДЕЙСТВИЯ ЗАДАНИЙ И СТАТЕЙ ====================
 function readArticleAndEarn(artId, url) {
   if (!readArticles.includes(artId)) {
     balance += artId === 1 ? 300 : 400;
@@ -421,22 +435,22 @@ function openSubscriptionModal() {
 
     const container = document.getElementById("sub-options-container");
     container.innerHTML = task.options.map((opt, i) => `
-      <label><input type="radio" name="sub-opt" value="${i}"> ${opt}</label>
+      <label style="display: block; margin-bottom: 8px; cursor: pointer;">
+        <input type="radio" name="sub-opt" value="${i}"> ${opt}
+      </label>
     `).join("");
 
     openModal("modal-subscription");
   }
 }
+
 function submitSubscriptionAnswer() {
   const selected = document.querySelector('input[name="sub-opt"]:checked');
   if (!selected) return;
+
   if (parseInt(selected.value) === subscriptionTasks[0].correct) {
     balance += 600;
     completedTasks.push(3);
     saveState();
     updateUI();
     closeModal("modal-subscription");
-  }
-}
-  }
-}
