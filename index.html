@@ -71,10 +71,47 @@
       </div>
     </section>
 
-    <!-- ПРАВАЯ КОЛОНКА: БАЗА ЗНАНИЙ (СТАТЬИ ПРО ДЕПОЗИТ И ПОДУШКУ) -->
+    <!-- ПРАВАЯ КОЛОНКА: БАЗА ЗНАНИЙ И ВИШЛИСТ -->
     <section class="column info-column">
-      <h2>📚 База знаний</h2>
-      <p class="section-desc">Читайте достоверные статьи и прокачивайте финансовую грамотность.</p>
+      <h2>📚 База знаний & Цели</h2>
+      <p class="section-desc">Читайте достоверные статьи и копите на мечту.</p>
+
+      <!-- БЛОК ВИШЛИСТА (МЕЧТА) -->
+      <div class="info-card wishlist-card" id="wishlist-block">
+        <div class="info-header">
+          <h3>🎯 Моя главная цель (Вишлист)</h3>
+          <span class="badge blue">Накопления</span>
+        </div>
+        
+        <p>Впишите вашу цель (максимум 1) от 10 000 ₸ до 50 000 ₸:</p>
+
+        <!-- Форма ввода, если цель еще не задана -->
+        <form id="wishlist-form" onsubmit="setWishlistGoal(event)">
+          <input type="text" id="wish-title-input" placeholder="Название (напр. Наушники)" required>
+          <input type="number" id="wish-price-input" placeholder="Сумма в ₸ (от 10 000 до 50 000)" min="10000" max="50000" required>
+          <button type="submit" class="btn btn-full" style="margin-top: 10px;">Поставить цель 🚀</button>
+        </form>
+
+        <!-- Блок прогресса (скрыт по умолчанию, пока цель не введена) -->
+        <div id="wishlist-progress-box" class="hidden">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <strong id="wish-display-title" style="color: #fab387;"></strong>
+            <span id="wish-display-price" style="font-weight: 700; color: #a6e3a1;"></span>
+          </div>
+          
+          <!-- Шкала прогресса -->
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="wish-progress-fill"></div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-top: 6px; color: #a6adc8;">
+            <span id="wish-percent-text">0% накоплено</span>
+            <span id="wish-remains-text">Осталось: 0 ₸</span>
+          </div>
+
+          <button class="btn btn-secondary" onclick="resetWishlistGoal()" style="margin-top: 12px; font-size: 0.8rem; padding: 6px;">Сбросить цель 🔄</button>
+        </div>
+      </div>
 
       <!-- Статья 1: Депозиты -->
       <div class="info-card" id="info-card-1">
@@ -86,16 +123,17 @@
         <button class="btn btn-secondary" id="btn-info-1" onclick="readArticleAndEarn(1, 'https://fingramota.kz/ru/rubric/deposits')">Читать статью (+300 ₸)</button>
       </div>
 
-     <!-- Статья 2: Подушка безопасности -->
-<div class="info-card" id="info-card-2">
-  <div class="info-header">
-    <h3>🛡️ Финансовая подушка безопасности</h3>
-    <span class="reward">+400 ₸</span>
-  </div>
-  <p>Зачем нужен запас денег на «черный день», сколько месячных расходов он должен закрывать и где его правильно хранить.</p>
-  <button class="btn btn-secondary" id="btn-info-2" onclick="readArticleAndEarn(2, 'https://fingramota.kz/ru/news/chto-takoe-finansovaya-podushka-bezopasnosti-i-kak-ee-sformirovat')">Читать статью (+400 ₸)</button>
-</div>
+      <!-- Статья 2: Подушка безопасности -->
+      <div class="info-card" id="info-card-2">
+        <div class="info-header">
+          <h3>🛡️ Финансовая подушка безопасности</h3>
+          <span class="reward">+400 ₸</span>
+        </div>
+        <p>Зачем нужен запас денег на «черный день», сколько месячных расходов он должен закрывать и где его правильно хранить.</p>
+        <button class="btn btn-secondary" id="btn-info-2" onclick="readArticleAndEarn(2, 'https://fingramota.kz/ru/news/chto-takoe-finansovaya-podushka-bezopasnosti-i-kak-ee-sformirovat')">Читать статью (+400 ₸)</button>
+      </div>
 
+      <!-- Лайфхак -->
       <div class="info-card hint">
         <h3>💡 Быстрый лайфхак: Правило 50/30/20</h3>
         <p>Делите доходы: <strong>50%</strong> — на обязательные нужды, <strong>30%</strong> — на желания и развлечения, <strong>20%</strong> — откладывайте в сбережения.</p>
@@ -105,7 +143,7 @@
 
   </main>
 
-  <!-- ==================== МОДАЛЬНЫЕ ОКНА (POPUPS) ==================== -->
+  <!-- ==================== МОДАЛЬНЫЕ ОКНА ==================== -->
 
   <!-- МОДАЛКА 1: АУДИТ РАСХОДОВ -->
   <div class="modal-overlay" id="modal-audit" onclick="closeOnOverlay(event, 'modal-audit')">
