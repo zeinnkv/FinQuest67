@@ -44,7 +44,7 @@
         <div class="card-badge">Аналитика</div>
         <div class="card-reward">+500 ₸</div>
         <h3 class="card-title">📊 Аудит карманных расходов</h3>
-        <p class="card-desc">Запишите свои траты за последние 3 дня и распределите их по 3 категориям: «Нужно», «Хочу» и «Инвестиции».</p>
+        <p class="card-desc">Запишите свои траты (снеки, книги, обложки и т.д.) и распределите их по категориям: «Нужно», «Хочу», «Инвестиции».</p>
         <button id="btn-task-1" class="btn-primary">Выполнить задание</button>
       </div>
 
@@ -52,7 +52,7 @@
         <div class="card-badge">Сравнение</div>
         <div class="card-reward">+700 ₸</div>
         <h3 class="card-title">🛒 Инспекция супермаркета</h3>
-        <p class="card-desc">Сравните два товара, рассчитайте стоимость за 1 л/кг и выберите выгодный вариант. (Попыток: 2/2)</p>
+        <p class="card-desc">Сравните два товара, бренд, качество и цену за 1 л/кг с фото. (Попыток: <span id="market-attempts-count">2</span>/2)</p>
         <button id="btn-task-2" class="btn-primary">Выполнить задание</button>
       </div>
 
@@ -60,7 +60,7 @@
         <div class="card-badge">Аналитика</div>
         <div class="card-reward">+600 ₸</div>
         <h3 class="card-title">🎧 Охота за подписками</h3>
-        <p class="card-desc">Посчитайте траты на популярные сервисы и найдите способ сэкономить на семейном тарифе.</p>
+        <p class="card-desc">Считайте траты на популярные сервисы из пула 7+ актуальных подписок и экономьте на семейных тарифах.</p>
         <button id="btn-task-3" class="btn-primary">Выполнить задание</button>
       </div>
     </section>
@@ -98,7 +98,7 @@
             <input type="number" id="wish-deposit-input" placeholder="Сумма для пополнения (₸)" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #45475a; background: #181825; color: #cdd6f4;">
             <button type="button" class="btn-primary" onclick="depositToWishlist()" style="padding: 8px 16px;">Отложить</button>
           </div>
-          <button type="button" class="btn-secondary" onclick="resetWishlistGoal()" style="margin-top: 8px; width: 100%; background: #313244; color: #f38ba8; border: none; padding: 6px; border-radius: 6px; cursor: pointer;">Сбросить цель 🔄</button>
+          <button type="button" class="btn-secondary" onclick="resetWishlistGoal()" style="margin-top: 8px; width: 100%; background: #313244; color: #f38ba8; border: none; padding: 6px; border-radius: 6px; cursor: pointer;">Сбросить цель (деньги вернутся) 🔄</button>
         </div>
       </div>
 
@@ -106,7 +106,7 @@
       <div class="info-card">
         <div class="card-reward">+300 ₸</div>
         <h3 class="card-title">📚 Что такое депозит и как работают вклады?</h3>
-        <p class="card-desc">Узнайте, как деньги в банке приносят пассивный доход за счет сложных процентов и почему депозит защищен государством.</p>
+        <p class="card-desc">Узнайте, как деньги в банке приносят пассивный доход за счет сложных процентов.</p>
         <button id="btn-info-1" class="btn-secondary">Читать статью (+300 ₸)</button>
       </div>
 
@@ -114,14 +114,14 @@
       <div class="info-card">
         <div class="card-reward">+400 ₸</div>
         <h3 class="card-title">🛡️ Финансовая подушка безопасности</h3>
-        <p class="card-desc">Зачем нужен запас денег на «черный день», сколько месячных расходов он должен закрывать и где его правильно хранить.</p>
+        <p class="card-desc">Зачем нужен запас денег на «черный день» и где его правильно хранить.</p>
         <button id="btn-info-2" class="btn-secondary">Читать статью (+400 ₸)</button>
       </div>
 
       <!-- Лайфхак -->
       <div class="info-card tip-card">
         <h3 class="card-title">💡 Быстрый лайфхак: Правило 50/30/20</h3>
-        <p class="card-desc">Делите доходы: 50% — на обязательные нужды, 30% — на желания и развлечения, 20% — откладывайте в сбережения.</p>
+        <p class="card-desc">Делите доходы: 50% — нужды, 30% — желания, 20% — сбережения и инвестиции.</p>
       </div>
     </section>
 
@@ -145,23 +145,42 @@
     </div>
   </div>
 
+  <!-- Модалка Аудит расходов -->
   <div id="modal-audit" class="modal-overlay" onclick="closeOnOverlay(event, 'modal-audit')">
-    <div class="modal-content">
+    <div class="modal-content" style="width: 480px;">
       <h2>📊 Аудит карманных расходов</h2>
-      <p>Распределите тестовые траты (кофе 1000₸, учебник 2500₸, кино 2000₸) по правильным категориям и заберите награду!</p>
-      <button class="btn-primary" onclick="submitAudit(event)" style="width: 100%; margin-top: 15px;">Завершить аудит (+500 ₸)</button>
+      <p>Добавьте минимум 3 свои траты (например: Снеки, Книга, Обложка), укажите сумму и выберите категорию:</p>
+      
+      <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+        <input type="text" id="audit-item-name" placeholder="Название (напр. Книга)" style="flex: 2; padding: 8px; border-radius: 8px; border: 1px solid #45475a; background: #181825; color: #cdd6f4;">
+        <input type="number" id="audit-item-price" placeholder="Сумма ₸" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #45475a; background: #181825; color: #cdd6f4;">
+        <select id="audit-item-cat" style="flex: 1.2; padding: 8px; border-radius: 8px; border: 1px solid #45475a; background: #181825; color: #cdd6f4;">
+          <option value="Нужно">Нужно</option>
+          <option value="Хочу">Хочу</option>
+          <option value="Инвестиции">Инвестиции</option>
+        </select>
+      </div>
+      <button type="button" class="btn-secondary" onclick="addAuditItem()" style="margin-bottom: 15px;">Добавить трату ➕</button>
+
+      <div id="audit-items-list" style="max-height: 150px; overflow-y: auto; margin-bottom: 15px; background: #11111b; padding: 8px; border-radius: 8px; font-size: 13px;">
+        <em>Пока ничего не добавлено...</em>
+      </div>
+
+      <button class="btn-primary" onclick="submitAuditFinal()" style="width: 100%;">Завершить задание (+500 ₸)</button>
     </div>
   </div>
 
+  <!-- Модалка Супермаркет -->
   <div id="modal-market" class="modal-overlay" onclick="closeOnOverlay(event, 'modal-market')">
-    <div class="modal-content">
+    <div class="modal-content" style="width: 460px;">
       <h2>🛒 Инспекция супермаркета</h2>
-      <p>Выберите наиболее выгодный товар по цене за единицу объема:</p>
-      <div id="products-container" style="margin: 15px 0; display: flex; flex-direction: column; gap: 10px;"></div>
+      <p id="market-subtitle">Сравните товары по цене за 1 л/кг, бренду и качеству:</p>
+      <div id="products-container" style="margin: 15px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"></div>
       <button class="btn-primary" onclick="submitMarketChoice()" style="width: 100%;">Проверить выбор (+700 ₸)</button>
     </div>
   </div>
 
+  <!-- Модалка Подписки -->
   <div id="modal-subscription" class="modal-overlay" onclick="closeOnOverlay(event, 'modal-subscription')">
     <div class="modal-content">
       <h2>🎧 Охота за подписками</h2>
